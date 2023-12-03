@@ -9,15 +9,3 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-  - package-ecosystem: "yarn" # See documentation for possible values
-    directory: "/web" # Location of package manifests
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "yarn" # See documentation for possible values
-    directory: "/server" # Location of package manifests
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "yarn" # See documentation for possible values
-    directory: "/share" # Location of package manifests
-    schedule:
-      interval: "weekly"
