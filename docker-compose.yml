@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  rtf-42-discord-bot:
+    build: .
+    image: multithefranky/rtf-42-discord-bot
+    platform: linux/amd64
+    container_name: rtf-42-discord-bot
+    volumes:
+      - "./log:/app/log"
+      - "./db:/app/db"
+    env_file: .env
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
