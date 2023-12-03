@@ -3,7 +3,7 @@ import { createLogger, format, transports } from "winston";
 import "winston-daily-rotate-file";
 
 export const LOG_DIR = "log";
-export const PROJECT = "rtf-42-discord-bot";
+export const PROJECT = "rtf-42nd-discord-bot";
 
 // Create a logger with winston
 const logger = createLogger({

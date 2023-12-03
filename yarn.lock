@@ -4404,9 +4404,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rtf-42-discord-bot@workspace:.":
+"rtf-42nd-discord-bot@workspace:.":
   version: 0.0.0-use.local
-  resolution: "rtf-42-discord-bot@workspace:."
+  resolution: "rtf-42nd-discord-bot@workspace:."
   dependencies:
     "@commitlint/cli": 17.1.2
     "@commitlint/config-conventional": 16.2.1

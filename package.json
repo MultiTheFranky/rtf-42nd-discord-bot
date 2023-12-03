@@ -1,10 +1,10 @@
 {
-  "name": "rtf-42-discord-bot",
+  "name": "rtf-42nd-discord-bot",
   "version": "0.0.1",
   "description": "A Discord Bot for 42nd RTF Team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MultiTheFranky/rtf-42-discord-bot"
+    "url": "https://github.com/MultiTheFranky/rtf-42nd-discord-bot"
   },
   "author": "Francisco Álamo García",
   "license": "MIT",

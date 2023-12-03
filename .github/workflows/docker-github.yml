@@ -26,12 +26,12 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: |
-            multithefranky/rtf-42-discord-bot
+            multithefranky/rtf-42nd-discord-bot
             ghcr.io/${{ github.repository }}
       - name: Publish to Registry
         uses: docker/build-push-action@v3
         with:
-          repository: ${{ env.IMAGE_REPOSITORY }}/rtf-42-discord-bot
+          repository: ${{ env.IMAGE_REPOSITORY }}/rtf-42nd-discord-bot
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           tag_with_ref: true
