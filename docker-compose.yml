@@ -2,7 +2,7 @@ version: "3.8"
 services:
   rtf-42nd-discord-bot:
     build: .
-    image: multithefranky/rtf-42nd-discord-bot
+    image: ghcr.io/multithefranky/rtf-42nd-discord-bot:main
     platform: linux/amd64
     container_name: rtf-42nd-discord-bot
     volumes:
