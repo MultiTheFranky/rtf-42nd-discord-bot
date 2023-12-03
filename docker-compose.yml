@@ -8,7 +8,7 @@ services:
     volumes:
       - "./log:/app/log"
       - "./db:/app/db"
-    env_file: .env
+      - "./.env:/app/.env"
     ports:
       - "${PORT}:${PORT}"
     restart: unless-stopped
