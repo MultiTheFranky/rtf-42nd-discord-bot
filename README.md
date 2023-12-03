@@ -17,7 +17,7 @@ The 42nd RTF Discord Bot is a powerful and customizable bot designed for the 42n
 
 To install and run the 42nd RTF Discord Bot, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/42nd-rtf-discord-bot.git`
+1. Clone the repository: `git clone https://github.com/MultiTheFranky/rtf-42-discord-bot.git`
 2. Install the dependencies: `yarn`
 3. Configure the bot by creating a `.env` file and setting the required environment variables.
 4. Start the bot: `yarn dev`
