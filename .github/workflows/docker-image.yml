@@ -19,6 +19,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Copy .env file
-        run: cp .env.example .env
+        run: cp .example.env .env
       - name: Build the Docker image
         run: docker compose build
