@@ -44,3 +44,4 @@ For any questions or inquiries, please contact the project maintainer:
 
 - Discord: fr4nky
 - Email: me@multithefranky.com
+- Web: https://multithefranky.com
