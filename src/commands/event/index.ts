@@ -9,8 +9,6 @@ import {
 import { DiscordCommand } from "../../types/discord/types";
 import { writeToDB } from "../../database";
 
-const TEAMS = ["Bravo", "Delta", "Strider"];
-
 const getPlayers = async (guild: Guild, team: string) => {
   // The players are on a role with the name of the team
   const role = (await guild.roles.fetch())
@@ -22,9 +20,9 @@ const getPlayers = async (guild: Guild, team: string) => {
   const members = await role.members;
 
   // Get the name of the members
-  const players = members.map(
-    (member) => member.nickname ?? member.user.username
-  );
+  const players = members
+    .filter((member) => !member.user.bot && !member.user.system)
+    .map((member) => member.nickname ?? member.user.username);
 
   // Return the players
   return players;
@@ -239,6 +237,7 @@ export const command: DiscordCommand = {
       return;
     }
 
+    const TEAMS = guild.roles.cache.map((role) => role.name);
     const listOfPlayers = TEAMS.map(async (team) => {
       const players = await getPlayers(guild, team);
       return {
@@ -329,7 +328,7 @@ export const command: DiscordCommand = {
     if (!guild) {
       return;
     }
-
+    const TEAMS = guild.roles.cache.map((role) => role.name);
     const listOfPlayers = TEAMS.map(async (team) => {
       const players = await getPlayers(guild, team);
       const playersId = await getPlayersId(guild, team);
