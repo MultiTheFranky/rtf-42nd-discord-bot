@@ -1,5 +1,4 @@
 import express from "express";
-import { config } from "dotenv";
 import { Client } from "discord.js";
 import logger from "./utils/logger";
 import { startDiscordBot } from "./discord";
@@ -9,7 +8,13 @@ import { initDB } from "./database";
 // eslint-disable-next-line import/no-mutable-exports
 export let client: Client;
 
-config();
+// Unhandled rejections
+process.on("unhandledRejection", (error) => {
+  if (error instanceof Error) {
+    logger.error(`Unhandled rejection: ${error.message}`);
+  }
+});
+
 (async () => {
   const app = express();
 
@@ -30,10 +35,3 @@ config();
     logger.info(`Listening on port ${process.env.PORT}`);
   });
 })();
-
-// Unhandled rejections
-process.on("unhandledRejection", (error) => {
-  if (error instanceof Error) {
-    logger.error(`Unhandled rejection: ${error.message}`);
-  }
-});

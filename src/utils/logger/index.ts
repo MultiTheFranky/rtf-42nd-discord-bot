@@ -1,10 +1,9 @@
 import path from "path";
-import stripAnsi from "strip-ansi";
 import { createLogger, format, transports } from "winston";
 import "winston-daily-rotate-file";
 
 export const LOG_DIR = "log";
-export const PROJECT = "lince-discord-bot";
+export const PROJECT = "rtf-42-discord-bot";
 
 // Create a logger with winston
 const logger = createLogger({
@@ -18,9 +17,7 @@ const logger = createLogger({
         format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
         format.printf(
           (info) =>
-            `${info.timestamp} ${info.level} [${info.label}]: ${stripAnsi(
-              info.message
-            )}`
+            `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`
         )
       ),
       datePattern: "YYYY-MM-DD",

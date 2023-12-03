@@ -1,5 +1,5 @@
-# Docker file with Node 16 and Yarn 1.22.10
-FROM node:18-alpine3.11
+# Docker file with Node 18 and Alpine 3.17
+FROM node:18-alpine3.17
 
 # Set the working directory
 WORKDIR /app
