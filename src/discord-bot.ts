@@ -1,11 +1,11 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
-import logger from "./utils/logger";
+import logger from "utils/logger";
+import { registerEventsOnReady } from "events/index";
 import {
   listenerOnInteractionCreate,
   registerCommandsOnReady,
   reactionListener,
-} from "./commands";
-import { registerEventsOnReady } from "./events";
+} from "commands/index";
 
 export const startDiscordBot = async () => {
   const client = new Client({

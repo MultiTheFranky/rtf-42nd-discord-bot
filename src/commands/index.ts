@@ -7,9 +7,9 @@ import {
   MessageReaction,
   User,
 } from "discord.js";
-import logger from "../utils/logger/index";
-import { DiscordCommand } from "../types/discord/types";
-import { readFromDB } from "../database";
+import logger from "utils/logger";
+import { DiscordCommand } from "@rtf-types/discord";
+import { readFromDB } from "src/database";
 
 /**
  * Function to get all commands in the commands directory
