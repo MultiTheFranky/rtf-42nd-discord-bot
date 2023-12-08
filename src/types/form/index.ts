@@ -4,6 +4,7 @@ export type Form = {
   description: string;
   questions: Question[];
   lastQuestion?: Question;
+  sent: boolean;
 };
 export type Question = {
   id: string;

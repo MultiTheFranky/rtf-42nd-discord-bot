@@ -23,12 +23,14 @@ export const createForm = (
     name,
     description,
     questions,
+    sent: false,
   });
   return {
     id,
     name,
     description,
     questions,
+    sent: false,
   };
 };
 
@@ -223,9 +225,12 @@ export const sendNextQuestion = async (
   if (nextQuestion) {
     await sendFormQuestion(user, nextQuestion, formId);
   } else {
+    if (form.sent) return;
     user.send(
       "Gracias por responder el formulario, tus respuestas han sido enviadas a los administradores de R.T.F."
     );
+    form.sent = true;
+    updateForm(form);
     // Send answer to the guild channel
     await formResponse(client, "baúl", form);
   }
