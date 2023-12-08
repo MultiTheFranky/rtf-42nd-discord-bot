@@ -12,7 +12,7 @@ export const initWelcomeForm = (user: User) =>
         type: "text",
         question: "Indica tu e-mail.",
         validators: [
-          (answer) => {
+          (answer: string) => {
             const regex = /\S+@\S+\.\S+/;
             return {
               message: "El e-mail debe tener el formato email@domain.com",
@@ -31,7 +31,7 @@ export const initWelcomeForm = (user: User) =>
         type: "text",
         question: "Indica tu fecha de nacimiento.",
         validators: [
-          (answer) => {
+          (answer: string) => {
             const regex =
               /^(0?[1-9]|[12][0-9]|3[01])([/-])(0?[1-9]|1[012])\2(\d{4})$/;
             return {

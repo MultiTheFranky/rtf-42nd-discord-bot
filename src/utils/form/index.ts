@@ -6,8 +6,8 @@ import {
   TextChannel,
   User,
 } from "discord.js";
-import { Question, Form } from "@rtf-types/form";
-import { db } from "src/database";
+import { Question, Form } from "types/form";
+import { db } from "database";
 import logger from "utils/logger";
 
 // Form

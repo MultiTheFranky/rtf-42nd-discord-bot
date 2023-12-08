@@ -1,8 +1,8 @@
-import { Client, Events } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 import logger from "utils/logger";
-import { DiscordEvent } from "@rtf-types/discord";
+import { DiscordEvent } from "types/discord";
+import { Client, Events } from "discord.js";
 /**
  * Function to get all events in the events directory
  * @returns {DiscordEvent[]} - The events

@@ -1,7 +1,7 @@
 import { Events, GuildMember, TextChannel } from "discord.js";
 import { DiscordEvent } from "types/discord";
 import { sendForm, initReactionCallback, initAnswerCallback } from "utils/form";
-import { client } from "src/server";
+import { client } from "server";
 import { initWelcomeForm } from "utils/form/welcomeForm";
 
 const CHANNEL = "llegadas";

@@ -1,4 +1,4 @@
-import { DiscordCommand } from "@rtf-types/discord";
+import { DiscordCommand } from "types/discord";
 import {
   ApplicationCommandOptionType,
   Collection,
@@ -7,7 +7,7 @@ import {
   TextChannel,
   User,
 } from "discord.js";
-import { writeToDB } from "src/database";
+import { writeToDB } from "database";
 
 const getPlayers = async (guild: Guild, team: string) => {
   // The players are on a role with the name of the team

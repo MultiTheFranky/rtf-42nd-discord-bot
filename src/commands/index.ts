@@ -8,8 +8,8 @@ import {
   User,
 } from "discord.js";
 import logger from "utils/logger";
-import { DiscordCommand } from "@rtf-types/discord";
-import { readFromDB } from "src/database";
+import { DiscordCommand } from "types/discord";
+import { readFromDB } from "database";
 
 /**
  * Function to get all commands in the commands directory

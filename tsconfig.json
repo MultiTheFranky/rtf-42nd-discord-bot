@@ -1,27 +1,20 @@
 {
   "compilerOptions": {
-    "strictNullChecks": true, // enable strict null checks as a best practice
+    "strictNullChecks": true,
     "allowJs": false,
-    "module": "commonjs",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "target": "ES2021",
     "noImplicitAny": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": "src",
-    "paths": {
-      "@rtf-types/*": ["types/*"],
-      "src/*": ["*"],
-      "node_modules/*": ["node_modules/*"],
-    },
     "declaration": true,
-    // "emitDecoratorMetadata": true,
-    // "experimentalDecorators": true,
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "es2016", "ES2021"]
   },
-  "include": ["src/**/*", ".eslintrc.js"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "src/**/*.spec.ts"]
 }
