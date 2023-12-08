@@ -1,8 +1,8 @@
 import express from "express";
 import { Client } from "discord.js";
-import logger from "./utils/logger";
-import { startDiscordBot } from "./discord";
-import { initDB } from "./database";
+import logger from "utils/logger";
+import { startDiscordBot } from "src/discord-bot";
+import { initDB } from "src/database";
 // import { startPterodactyl } from "./pterodactyl";
 
 // eslint-disable-next-line import/no-mutable-exports
@@ -27,9 +27,6 @@ process.on("unhandledRejection", (error) => {
 
   // Discord bot
   client = await startDiscordBot();
-
-  // Init pterodactyl
-  // await startPterodactyl();
 
   app.listen(process.env.PORT, () => {
     logger.info(`Listening on port ${process.env.PORT}`);

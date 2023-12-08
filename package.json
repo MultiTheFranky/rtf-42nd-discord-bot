@@ -16,8 +16,8 @@
     "postinstall": "husky install",
     "precommit": "yarn lint && yarn prettier",
     "prepush": "yarn build",
-    "dev": "env-cmd tsnd --respawn src/server.ts",
-    "start": "env-cmd yarn lint && ts-node src/server.ts",
+    "dev": "env-cmd tsnd -r tsconfig-paths/register --respawn src/server.ts",
+    "start": "env-cmd yarn lint && ts-node -r tsconfig-paths/register src/server.ts",
     "server": "env-cmd node dist/server.js",
     "build": "tsc",
     "clean": "rimraf dist && rimraf log && rimraf db && rimraf node_modules && yarn",
@@ -55,6 +55,7 @@
     "prettier": "2.7.1",
     "rimraf": "^4.4.1",
     "ts-node": "^10.9.1",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "4.2.0"
   }
 }

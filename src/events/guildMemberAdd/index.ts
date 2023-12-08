@@ -1,5 +1,8 @@
 import { Events, GuildMember, TextChannel } from "discord.js";
-import { DiscordEvent } from "discord/types";
+import { DiscordEvent } from "types/discord";
+import { sendForm, initReactionCallback, initAnswerCallback } from "utils/form";
+import { client } from "src/server";
+import { initWelcomeForm } from "utils/form/welcomeForm";
 
 const CHANNEL = "llegadas";
 const INITIAL_ROLE = "ASPIRANTE";
@@ -17,5 +20,9 @@ export const event: DiscordEvent = {
     );
     if (!role) return;
     member.roles.add(role);
+    initAnswerCallback(client);
+    initReactionCallback(client);
+    const form = initWelcomeForm(member.user);
+    await sendForm(form, client);
   },
 };
