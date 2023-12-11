@@ -5,7 +5,7 @@ export const initWelcomeForm = (user: User) =>
   createForm(
     user.id,
     "Formulario de entrada",
-    "Bienvenido a 42nd R.T.F. A continuación, te haremos unas preguntas para conocerte mejor y una vez comprueben tus respuestas, te daremos acceso al servidor.",
+    "Bienvenido a 42nd R.T.F. A continuación, te haremos unas preguntas para conocerte mejor y una vez comprueben tus respuestas, te daremos acceso al servidor. **Las preguntas se deben responder directamente al bot.**",
     [
       {
         id: "1",
@@ -71,7 +71,7 @@ export const initWelcomeForm = (user: User) =>
         id: "7",
         type: "text",
         question:
-          "¿Existe alguna especialidad dentro de ARMA3 que se te de bien o a la que aspiras?",
+          "¿Existe alguna especialidad dentro de ARMA3 que se te de bien o a la que aspiras? Si es así, indícala.",
       },
       {
         id: "8",
