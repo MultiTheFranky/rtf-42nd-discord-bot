@@ -6,6 +6,7 @@ import {
   registerCommandsOnReady,
   reactionListener,
 } from "commands/index";
+import { initAnswerCallback, initReactionCallback } from "utils/form";
 
 export const startDiscordBot = async () => {
   const client = new Client({
@@ -44,6 +45,10 @@ export const startDiscordBot = async () => {
 
   // Register all events
   await registerEventsOnReady(client);
+
+  initAnswerCallback(client);
+
+  initReactionCallback(client);
 
   const token = process.env.DISCORD_TOKEN;
   if (!token) {

@@ -1,6 +1,6 @@
 import { Events, GuildMember, TextChannel } from "discord.js";
 import { DiscordEvent } from "types/discord";
-import { sendForm, initReactionCallback, initAnswerCallback } from "utils/form";
+import { sendForm } from "utils/form";
 import { client } from "server";
 import { initWelcomeForm } from "utils/form/welcomeForm";
 
@@ -20,8 +20,6 @@ export const event: DiscordEvent = {
     );
     if (!role) return;
     member.roles.add(role);
-    initAnswerCallback(client);
-    initReactionCallback(client);
     const form = initWelcomeForm(member.user);
     await sendForm(form, client);
   },
