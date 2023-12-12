@@ -34,6 +34,11 @@ export const createForm = (
   };
 };
 
+export const getAllForms = (): Form[] => {
+  const forms = db.JSON() as Form[];
+  return forms;
+};
+
 export const addQuestion = (form: Form, question: Question): Form => {
   db.set(form.id, {
     ...form,
@@ -293,11 +298,11 @@ export const initAnswerCallback = (bot: Client): void => {
 
   // Check when the bot is ready that the forms are sent, if not, continue sending them
   bot.on(Events.ClientReady, async () => {
-    const users = bot.users.cache;
-    users.forEach(async (u) => {
-      const form = getForm(u.id);
+    const forms = getAllForms();
+    forms.forEach(async (form) => {
       if (form && !form.sent) {
-        await sendForm(form, bot);
+        const u = await bot.users.fetch(form.id);
+        await sendNextQuestion(bot, u, form.id);
       }
     });
   });
