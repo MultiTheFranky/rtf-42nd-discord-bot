@@ -36,8 +36,8 @@ export const createForm = (
 };
 
 export const getAllForms = (): Form[] => {
-  const forms = db.JSON() as Form[];
-  return forms;
+  const forms = db.JSON() as Record<string, Form>;
+  return Object.values(forms);
 };
 
 export const addQuestion = (form: Form, question: Question): Form => {
