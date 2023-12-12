@@ -217,6 +217,7 @@ export const sendNextQuestion = async (
   formId: string
 ): Promise<void> => {
   const form = getForm(formId);
+  if (!form) return;
   const { lastQuestion } = form;
   const lastQuestionIndex = form.questions.findIndex(
     (q) => q.id === lastQuestion?.id
@@ -288,6 +289,17 @@ export const initAnswerCallback = (bot: Client): void => {
     } else {
       logger.error("Form not found");
     }
+  });
+
+  // Check when the bot is ready that the forms are sent, if not, continue sending them
+  bot.on(Events.ClientReady, async () => {
+    const users = bot.users.cache;
+    users.forEach(async (u) => {
+      const form = getForm(u.id);
+      if (form && !form.sent) {
+        await sendForm(form, bot);
+      }
+    });
   });
 };
 

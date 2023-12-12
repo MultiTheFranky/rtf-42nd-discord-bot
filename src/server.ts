@@ -1,9 +1,8 @@
 import express from "express";
 import { Client } from "discord.js";
-import logger from "utils/logger";
 import { startDiscordBot } from "discord-bot";
 import { initDB } from "database";
-// import { startPterodactyl } from "./pterodactyl";
+import logger from "utils/logger";
 
 // eslint-disable-next-line import/no-mutable-exports
 export let client: Client;
