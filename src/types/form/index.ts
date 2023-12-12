@@ -12,7 +12,7 @@ export type Question = {
   type: "text" | "select" | "multi-select";
   options?: Option[];
   answer?: string;
-  validators?: Validator[];
+  validators?: string[];
 };
 export type Option = {
   emoji: string;

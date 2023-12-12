@@ -1,5 +1,30 @@
 import { User } from "discord.js";
+import { Validator } from "types/form";
 import { createForm } from "utils/form";
+
+export const WELCOME_FORM_VALIDATIONS = new Map<string, Validator>([
+  [
+    "email",
+    (answer: string) => {
+      const regex = /\S+@\S+\.\S+/;
+      return {
+        message: "El e-mail debe tener el formato email@domain.com",
+        valid: regex.test(answer),
+      };
+    },
+  ],
+  [
+    "date",
+    (answer: string) => {
+      const regex =
+        /^(0?[1-9]|[12][0-9]|3[01])([/-])(0?[1-9]|1[012])\2(\d{4})$/;
+      return {
+        message: "La fecha debe tener el formato dd/mm/aaaa",
+        valid: regex.test(answer),
+      };
+    },
+  ],
+]);
 
 export const initWelcomeForm = (user: User) =>
   createForm(
@@ -11,15 +36,7 @@ export const initWelcomeForm = (user: User) =>
         id: "1",
         type: "text",
         question: "Indica tu e-mail.",
-        validators: [
-          (answer: string) => {
-            const regex = /\S+@\S+\.\S+/;
-            return {
-              message: "El e-mail debe tener el formato email@domain.com",
-              valid: regex.test(answer),
-            };
-          },
-        ],
+        validators: ["email"],
       },
       {
         id: "2",
@@ -30,16 +47,7 @@ export const initWelcomeForm = (user: User) =>
         id: "3",
         type: "text",
         question: "Indica tu fecha de nacimiento.",
-        validators: [
-          (answer: string) => {
-            const regex =
-              /^(0?[1-9]|[12][0-9]|3[01])([/-])(0?[1-9]|1[012])\2(\d{4})$/;
-            return {
-              message: "La fecha debe tener el formato dd/mm/aaaa",
-              valid: regex.test(answer),
-            };
-          },
-        ],
+        validators: ["date"],
       },
       {
         id: "4",

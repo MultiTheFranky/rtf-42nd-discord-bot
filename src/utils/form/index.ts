@@ -9,7 +9,7 @@ import {
 import { Question, Form } from "types/form";
 import { db } from "database";
 import logger from "utils/logger";
-import { initWelcomeForm } from "./welcomeForm";
+import { WELCOME_FORM_VALIDATIONS } from "./welcomeForm";
 
 // Form
 
@@ -277,21 +277,22 @@ export const initAnswerCallback = (bot: Client): void => {
       const { lastQuestion } = form;
       if (lastQuestion) {
         if (lastQuestion.type === "text") {
-          const lastQuestionReal = initWelcomeForm(
-            message.author
-          ).questions.find((q) => q.id === lastQuestion.id);
-          if (lastQuestionReal) {
-            const { validators } = lastQuestionReal;
-            if (validators) {
-              const validation = validators.map((v) => v(message.content));
-              const valid = validation.every((v) => v.valid);
-              if (!valid) {
-                const errors = validation
-                  .filter((v) => !v.valid)
-                  .map((v) => v.message);
-                message.reply(errors.join("\n"));
-                return;
+          const { validators } = lastQuestion;
+          if (validators) {
+            const validation = validators.map((v) => {
+              const validator = WELCOME_FORM_VALIDATIONS.get(v);
+              if (validator) {
+                return validator(message.content);
               }
+              return { message: "Validator not found", valid: true };
+            });
+            const valid = validation.every((v) => v.valid);
+            if (!valid) {
+              const errors = validation
+                .filter((v) => !v.valid)
+                .map((v) => v.message);
+              message.reply(errors.join("\n"));
+              return;
             }
           }
         }
