@@ -93,6 +93,12 @@ export const sendFormQuestion = async (
 ): Promise<void> => {
   switch (question.type) {
     case "text": {
+      const form = getForm(formId);
+      const lastQuestion = form.questions.find((q) => q.id === question.id);
+      updateForm({
+        ...form,
+        lastQuestion,
+      });
       await user.send(question.question);
       break;
     }
