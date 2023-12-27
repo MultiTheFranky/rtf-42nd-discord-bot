@@ -102,5 +102,11 @@ export const initWelcomeForm = (user: User) =>
         question:
           "¿Tienes experiencia en modelado 3D, texturizado, programación o edición de video?",
       },
+      {
+        id: "10",
+        type: "text",
+        question:
+          "¿Cómo nos has conocido? (Si has sido invitado por algún miembro, indícalo)",
+      },
     ]
   );
