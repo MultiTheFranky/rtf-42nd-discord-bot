@@ -65,6 +65,7 @@ export const registerCommands = async (client: Client) => {
   if (!guildID) {
     throw new Error("No guild ID found!");
   }
+  await app.commands.set([], guildID);
   await app.commands.set(commands, guildID);
   logger.info(
     `Registered ${commands.length} commands. Commands: ${commands
