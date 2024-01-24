@@ -108,5 +108,15 @@ export const initWelcomeForm = (user: User) =>
         question:
           "¿Cómo nos has conocido? (Si has sido invitado por algún miembro, indícalo)",
       },
+      {
+        id: "11",
+        type: "text",
+        question: "¿Estás en activo en otro clan? De ser afirmativo ¿Cual?"
+      },
+      {
+        id: "12",
+        type: "text",
+        question: "¿Podrás mantener una asistencia aceptable los domingos de partida? 19:00-22:00"
+      }
     ]
   );
