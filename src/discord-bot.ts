@@ -7,6 +7,7 @@ import {
   reactionListener,
 } from "commands/index";
 import { initAnswerCallback, initReactionCallback } from "utils/form";
+import { cronJobReactionListener, initCronJobs } from "cronJobs";
 
 export const startDiscordBot = async () => {
   const client = new Client({
@@ -42,6 +43,7 @@ export const startDiscordBot = async () => {
 
   // Listen for reactions
   await reactionListener(client);
+  await cronJobReactionListener(client);
 
   // Register all events
   await registerEventsOnReady(client);
@@ -58,6 +60,11 @@ export const startDiscordBot = async () => {
 
   // Login to Discord
   await client.login();
+
+  client.on("ready", () => {
+    logger.info(`Logged in as ${client.user?.tag}!`);
+    initCronJobs();
+  });
 
   return client;
 };
