@@ -13,6 +13,6 @@ export const CronJobs: CronJob[] = [
     onReaction: async (reaction, user) => {
       onReaction(reaction, user);
     },
-    cron: "0 0 12 * * 0",
+    cron: "0 0 12 * * 1",
   },
 ];
