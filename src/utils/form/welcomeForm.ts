@@ -119,5 +119,16 @@ export const initWelcomeForm = (user: User) =>
         question:
           "¿Podrás mantener una asistencia aceptable los domingos de partida? 19:00-22:00",
       },
+      {
+        id: "13",
+        type: "text",
+        question: "¿Desde que país juegas?",
+      },
+      {
+        id: "14",
+        type: "text",
+        question:
+          "¿Has leído, comprendido las normas/reglas y te comprometes a su cumplimiento?",
+      },
     ]
   );
