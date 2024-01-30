@@ -1,0 +1,86 @@
+extend type Query {
+  """
+  Get Arma 3 attendance information
+  """
+  getArma3Attendance(
+    """
+    The date to get attendance for
+    """
+    date: String!
+  ): [Arma3Attendance]
+}
+
+extend type Mutation {
+  """
+  Add Arma 3 attendance information
+  """
+  addArma3Attendance(
+    """
+    The date to add attendance for
+    """
+    date: String!
+    """
+    The attendance information to add
+    """
+    attendance: [Arma3AttendanceInput!]!
+  ): [Arma3Attendance]
+}
+
+type Arma3Attendance {
+  """
+  The date of the attendance
+  """
+  date: String!
+  """
+  The attendance information
+  """
+  attendance: [Arma3AttendanceInfo!]!
+}
+
+input Arma3AttendanceInput {
+  """
+  The attendance information
+  """
+  attendance: [Arma3AttendanceInfoInput!]!
+}
+
+type Arma3AttendanceInfo {
+  """
+  The name of the player
+  """
+  name: String!
+  """
+  The attendance status of the player
+  """
+  status: Arma3AttendanceStatus!
+}
+
+input Arma3AttendanceInfoInput {
+  """
+  The name of the player
+  """
+  name: String!
+  """
+  The attendance status of the player
+  """
+  status: Arma3AttendanceStatus!
+}
+
+enum Arma3AttendanceStatus {
+  """
+  The player attended
+  """
+  ATTENDED
+  """
+  The player did not attend
+  """
+  DID_NOT_ATTEND
+  """
+  The player was late
+  """
+  LATE
+  """
+  The player was excused
+  """
+  EXCUSED
+}

@@ -25,6 +25,7 @@ module.exports = {
   },
   ignorePatterns: [
     "/dist/**/*", // Ignore built files.
+    "*__generated__/*", // Ignore generated files.
   ],
   plugins: ["@typescript-eslint", "unicorn", "import", "prettier"],
   rules: {
