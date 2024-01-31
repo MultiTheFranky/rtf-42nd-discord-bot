@@ -16,12 +16,13 @@ export interface MongoDBDataSource {
 
 export const mongoDBDataSource = (client: MongoClient): MongoDBDataSource => ({
   initialize: () => {
+    logger.info("Connecting to MongoDB");
     client.connect().then(() => {
       logger.info("Connected to MongoDB");
     });
   },
   getArma3Attendance: async (param) => {
-    const { date } = param;
+    const { date } = param.filter;
     const data = await findDocument<Arma3Attendance>(
       client,
       "arma3",

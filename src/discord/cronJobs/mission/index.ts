@@ -1,4 +1,4 @@
-import { writeToDB } from "database";
+import { writeToDB } from "discord/database";
 import {
   Collection,
   EmbedBuilder,

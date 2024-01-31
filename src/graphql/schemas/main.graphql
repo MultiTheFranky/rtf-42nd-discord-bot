@@ -1,0 +1,9 @@
+scalar Date
+
+type Query {
+  empty: String!
+}
+
+type Mutation {
+  empty: String!
+}

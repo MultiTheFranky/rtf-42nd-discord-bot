@@ -7,7 +7,7 @@ import {
   TextChannel,
   User,
 } from "discord.js";
-import { writeToDB } from "database";
+import { writeToDB } from "discord/database";
 
 const TEAMS = ["HQ", "ALPHA", "BRAVO", "SUPPORT"];
 

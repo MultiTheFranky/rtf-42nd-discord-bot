@@ -9,7 +9,7 @@ import {
 } from "discord.js";
 import logger from "discord/logger";
 import { DiscordCommand } from "discord/types/discord";
-import { readFromDB } from "database";
+import { readFromDB } from "discord/database";
 
 /**
  * Function to get all commands in the commands directory

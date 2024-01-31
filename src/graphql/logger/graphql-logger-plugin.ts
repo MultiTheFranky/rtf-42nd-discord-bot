@@ -2,13 +2,14 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 
-import { VariableValues } from "apollo-server-types";
-import {
-  ApolloServerPlugin,
-  GraphQLRequestContext,
-} from "apollo-server-plugin-base";
 import { GraphQLError, GraphQLFormattedError } from "graphql";
 import { LoggingConfig } from "graphql/config-loader";
+import {
+  ApolloServerPlugin,
+  BaseContext,
+  GraphQLRequestContext,
+} from "@apollo/server";
+import { VariableValues } from "@apollo/server/dist/esm/externalTypes/graphql";
 import { Logger } from "./logger";
 
 export const logError = (
@@ -37,12 +38,13 @@ export const logErrorWithStackTrace = (
     error: {
       name: error.name,
       message: error.message,
+      stack: error.stack,
     },
     query,
   };
 
   if (enableVariables && enableStackTrace) {
-    return logger.warn(message, {
+    return logger.error(message, {
       ...errorContext,
       error: {
         stackTrace: error.stack,
@@ -51,20 +53,20 @@ export const logErrorWithStackTrace = (
     });
   }
   if (enableVariables) {
-    return logger.warn(message, {
+    return logger.error(message, {
       ...errorContext,
       variables,
     });
   }
   if (enableStackTrace) {
-    return logger.warn(message, {
+    return logger.error(message, {
       ...errorContext,
       error: {
         stackTrace: error.stack,
       },
     });
   }
-  return logger.warn(message, errorContext);
+  return logger.error(message, errorContext);
 };
 
 export const logResponseWithError = (
@@ -91,7 +93,7 @@ export const loggingPlugin = (
   logger: Logger,
   config: LoggingConfig
 ): ApolloServerPlugin => ({
-  async requestDidStart(requestContext: GraphQLRequestContext) {
+  async requestDidStart(requestContext: GraphQLRequestContext<BaseContext>) {
     // let { query, variables } = requestContext.request;
     let { query } = requestContext.request;
     const { variables } = requestContext.request;
@@ -100,12 +102,6 @@ export const loggingPlugin = (
     const variablesEnabled: boolean = !config.LOGGING_VARIABLES_ENABLED;
     const queryEnabled: boolean = !config.LOGGING_QUERY_ENABLED;
     query = !queryEnabled ? query : undefined;
-
-    if (!variablesEnabled) {
-      logger.debug(`GraphQL request started!`, { query });
-    } else {
-      logger.debug(`GraphQL request started!`, { query, variables });
-    }
 
     return {
       async parsingDidStart() {
@@ -150,18 +146,6 @@ export const loggingPlugin = (
             }
           },
         };
-      },
-      async willSendResponse(reqContext: GraphQLRequestContext) {
-        const errors = reqContext.response?.errors;
-        if (errors) {
-          logResponseWithError(
-            logger,
-            errors,
-            query,
-            variables,
-            variablesEnabled
-          );
-        }
       },
     };
   },

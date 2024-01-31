@@ -2,35 +2,39 @@ extend type Query {
   """
   Get Arma 3 attendance information
   """
-  getArma3Attendance(
-    """
-    The date to get attendance for
-    """
-    date: String!
-  ): [Arma3Attendance]
+  getArma3Attendance(filter: Arma3AttendanceFilter!): [Arma3Attendance]
+}
+
+input Arma3AttendanceFilter {
+  """
+  The date to get attendance for
+  """
+  date: Date!
 }
 
 extend type Mutation {
   """
   Add Arma 3 attendance information
   """
-  addArma3Attendance(
-    """
-    The date to add attendance for
-    """
-    date: String!
-    """
-    The attendance information to add
-    """
-    attendance: [Arma3AttendanceInput!]!
-  ): [Arma3Attendance]
+  addArma3Attendance(input: Arma3AttendanceInput!): [Arma3Attendance]
+}
+
+input Arma3AttendanceInput {
+  """
+  The date to add attendance for
+  """
+  date: Date!
+  """
+  The attendance information to add
+  """
+  attendance: [Arma3AttendanceInfoInput!]!
 }
 
 type Arma3Attendance {
   """
   The date of the attendance
   """
-  date: String!
+  date: Date!
   """
   The attendance information
   """

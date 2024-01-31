@@ -7,7 +7,7 @@ import {
   User,
 } from "discord.js";
 import { CronJob as Cron } from "cron";
-import { readFromDB } from "database";
+import { readFromDB } from "discord/database";
 import logger from "discord/logger";
 import { CronJobs } from "./cronjobs";
 import type { CronJob as CronJobType } from "./types";

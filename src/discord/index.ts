@@ -8,7 +8,7 @@ import {
 } from "discord/commands/index";
 import { initAnswerCallback, initReactionCallback } from "discord/form";
 import { cronJobReactionListener, initCronJobs } from "discord/cronJobs";
-import { initDB } from "database";
+import { initDB } from "discord/database";
 
 // eslint-disable-next-line import/no-mutable-exports
 export let bot: Client;
@@ -59,7 +59,7 @@ export const startDiscordBot = async () => {
   const token = process.env.DISCORD_TOKEN;
   if (!token) {
     logger.error("No token provided!");
-    process.exit(1);
+    throw new Error("No token provided!");
   }
 
   // Login to Discord

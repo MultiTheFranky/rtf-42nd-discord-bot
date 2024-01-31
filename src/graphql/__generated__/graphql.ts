@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -12,6 +12,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: Date;
 };
 
 export type Arma3Attendance = {
@@ -19,7 +20,12 @@ export type Arma3Attendance = {
   /** The attendance information */
   attendance: Array<Arma3AttendanceInfo>;
   /** The date of the attendance */
-  date: Scalars['String'];
+  date: Scalars['Date'];
+};
+
+export type Arma3AttendanceFilter = {
+  /** The date to get attendance for */
+  date: Scalars['Date'];
 };
 
 export type Arma3AttendanceInfo = {
@@ -40,6 +46,8 @@ export type Arma3AttendanceInfoInput = {
 export type Arma3AttendanceInput = {
   /** The attendance information */
   attendance: Array<Arma3AttendanceInfoInput>;
+  /** The date to add attendance for */
+  date: Scalars['Date'];
 };
 
 export enum Arma3AttendanceStatus {
@@ -57,23 +65,24 @@ export type Mutation = {
   __typename?: 'Mutation';
   /** Add Arma 3 attendance information */
   addArma3Attendance?: Maybe<Array<Maybe<Arma3Attendance>>>;
+  empty: Scalars['String'];
 };
 
 
 export type MutationAddArma3AttendanceArgs = {
-  attendance: Array<Arma3AttendanceInput>;
-  date: Scalars['String'];
+  input: Arma3AttendanceInput;
 };
 
 export type Query = {
   __typename?: 'Query';
+  empty: Scalars['String'];
   /** Get Arma 3 attendance information */
   getArma3Attendance?: Maybe<Array<Maybe<Arma3Attendance>>>;
 };
 
 
 export type QueryGetArma3AttendanceArgs = {
-  date: Scalars['String'];
+  filter: Arma3AttendanceFilter;
 };
 
 
@@ -146,11 +155,13 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Arma3Attendance: ResolverTypeWrapper<Arma3Attendance>;
+  Arma3AttendanceFilter: Arma3AttendanceFilter;
   Arma3AttendanceInfo: ResolverTypeWrapper<Arma3AttendanceInfo>;
   Arma3AttendanceInfoInput: Arma3AttendanceInfoInput;
   Arma3AttendanceInput: Arma3AttendanceInput;
   Arma3AttendanceStatus: Arma3AttendanceStatus;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -159,10 +170,12 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Arma3Attendance: Arma3Attendance;
+  Arma3AttendanceFilter: Arma3AttendanceFilter;
   Arma3AttendanceInfo: Arma3AttendanceInfo;
   Arma3AttendanceInfoInput: Arma3AttendanceInfoInput;
   Arma3AttendanceInput: Arma3AttendanceInput;
   Boolean: Scalars['Boolean'];
+  Date: Scalars['Date'];
   Mutation: {};
   Query: {};
   String: Scalars['String'];
@@ -170,7 +183,7 @@ export type ResolversParentTypes = {
 
 export type Arma3AttendanceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Arma3Attendance'] = ResolversParentTypes['Arma3Attendance']> = {
   attendance?: Resolver<Array<ResolversTypes['Arma3AttendanceInfo']>, ParentType, ContextType>;
-  date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -180,17 +193,24 @@ export type Arma3AttendanceInfoResolvers<ContextType = any, ParentType extends R
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addArma3Attendance?: Resolver<Maybe<Array<Maybe<ResolversTypes['Arma3Attendance']>>>, ParentType, ContextType, RequireFields<MutationAddArma3AttendanceArgs, 'attendance' | 'date'>>;
+  addArma3Attendance?: Resolver<Maybe<Array<Maybe<ResolversTypes['Arma3Attendance']>>>, ParentType, ContextType, RequireFields<MutationAddArma3AttendanceArgs, 'input'>>;
+  empty?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getArma3Attendance?: Resolver<Maybe<Array<Maybe<ResolversTypes['Arma3Attendance']>>>, ParentType, ContextType, RequireFields<QueryGetArma3AttendanceArgs, 'date'>>;
+  empty?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  getArma3Attendance?: Resolver<Maybe<Array<Maybe<ResolversTypes['Arma3Attendance']>>>, ParentType, ContextType, RequireFields<QueryGetArma3AttendanceArgs, 'filter'>>;
 };
 
 export type Resolvers<ContextType = any> = {
   Arma3Attendance?: Arma3AttendanceResolvers<ContextType>;
   Arma3AttendanceInfo?: Arma3AttendanceInfoResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };

@@ -8,4 +8,4 @@ export const importSchema = (filePath: string): DocumentNode => {
 };
 
 export const getFilePath = (fileName: string): string =>
-  join(resolve(process.cwd(), `${__dirname}/schemas`), fileName);
+  join(resolve(process.cwd(), `${__dirname}/../../schemas`), fileName);

@@ -1,10 +1,6 @@
 import logger from "discord/logger";
 import { initDiscordBot } from "discord";
-import { server } from "./graphql/graphql";
-
-server.listen().then(({ url }) => {
-  logger.info(`🚀  Server ready at ${url}`);
-});
+import { startApolloServer } from "graphql/graphql";
 
 // Handle unhandled promise rejections on apollo server
 process.on("unhandledRejection", (error: Error) => {
@@ -23,3 +19,5 @@ initDiscordBot()
   .catch((error) => {
     logger.error("Discord bot failed to start", error);
   });
+
+startApolloServer();

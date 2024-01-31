@@ -2,6 +2,10 @@ import { JSONSchemaType } from "ajv";
 import { logger } from "./logger";
 import { validate } from "./validation";
 
+export type PortConfig = {
+  PORT?: string;
+};
+
 export type MongoDBConfig = {
   MONGODB_URI: string;
   MONGODB_DB: string;
@@ -48,6 +52,7 @@ const schema: JSONSchemaType<MongoDBConfig & LoggingConfig & CacheConfig> = {
     },
     LOGGING_ENCRYPT_PASS: { type: "string", nullable: true },
     NODE_CACHE_TTL_SECONDS: { type: "string", nullable: true },
+    PORT: { type: "string", nullable: true },
   },
   required: ["MONGODB_URI", "MONGODB_DB"],
   additionalProperties: true,
@@ -64,6 +69,7 @@ const loadConfig = (): unknown => {
     LOGGING_VARIABLES_ENABLED: env.LOGGING_VARIABLES_ENABLED,
     LOGGING_ENCRYPT_PASS: env.LOGGING_ENCRYPT_PASS,
     NODE_CACHE_TTL_SECONDS: env.NODE_CACHE_TTL_SECONDS,
+    PORT: env.PORT,
   };
 };
 
@@ -81,7 +87,10 @@ const validateConfig = (
   }
 };
 
-export const getConfig = (): MongoDBConfig & LoggingConfig & CacheConfig => {
+export const getConfig = (): MongoDBConfig &
+  LoggingConfig &
+  CacheConfig &
+  PortConfig => {
   const config = loadConfig();
   return validateConfig(config);
 };

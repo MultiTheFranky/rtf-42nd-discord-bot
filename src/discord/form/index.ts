@@ -7,7 +7,7 @@ import {
   User,
 } from "discord.js";
 import { Question, Form } from "discord/types/form";
-import { db } from "database";
+import { db } from "discord/database";
 import logger from "discord/logger";
 import { WELCOME_FORM_VALIDATIONS } from "./welcomeForm";
 
