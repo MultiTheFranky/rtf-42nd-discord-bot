@@ -16,7 +16,7 @@ extend type Mutation {
   """
   Add Arma 3 attendance information
   """
-  addArma3Attendance(input: Arma3AttendanceInput!): [Arma3Attendance]
+  addArma3Attendance(input: Arma3AttendanceInput!): Arma3Attendance
 }
 
 input Arma3AttendanceInput {

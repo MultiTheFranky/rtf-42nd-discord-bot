@@ -64,7 +64,7 @@ export enum Arma3AttendanceStatus {
 export type Mutation = {
   __typename?: 'Mutation';
   /** Add Arma 3 attendance information */
-  addArma3Attendance?: Maybe<Array<Maybe<Arma3Attendance>>>;
+  addArma3Attendance?: Maybe<Arma3Attendance>;
   empty: Scalars['String'];
 };
 
@@ -198,7 +198,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addArma3Attendance?: Resolver<Maybe<Array<Maybe<ResolversTypes['Arma3Attendance']>>>, ParentType, ContextType, RequireFields<MutationAddArma3AttendanceArgs, 'input'>>;
+  addArma3Attendance?: Resolver<Maybe<ResolversTypes['Arma3Attendance']>, ParentType, ContextType, RequireFields<MutationAddArma3AttendanceArgs, 'input'>>;
   empty?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
 };
 
