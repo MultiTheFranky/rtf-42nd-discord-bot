@@ -19,7 +19,7 @@ export const getArma3Attendance = async (
   _: ResolversParentTypes["Query"],
   { filter }: QueryGetArma3AttendanceArgs,
   context: Context
-): Promise<Arma3Attendance[] | null> => {
+): Promise<Arma3Attendance> => {
   const data = await context.dataSources.mongoDB.getArma3Attendance({ filter });
   return data;
 };

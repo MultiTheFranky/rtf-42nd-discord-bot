@@ -2,7 +2,7 @@ extend type Query {
   """
   Get Arma 3 attendance information
   """
-  getArma3Attendance(filter: Arma3AttendanceFilter!): [Arma3Attendance]
+  getArma3Attendance(filter: Arma3AttendanceFilter!): Arma3Attendance!
 }
 
 input Arma3AttendanceFilter {

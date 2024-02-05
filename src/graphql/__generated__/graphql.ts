@@ -77,7 +77,7 @@ export type Query = {
   __typename?: 'Query';
   empty: Scalars['String'];
   /** Get Arma 3 attendance information */
-  getArma3Attendance?: Maybe<Array<Maybe<Arma3Attendance>>>;
+  getArma3Attendance: Arma3Attendance;
 };
 
 
@@ -204,7 +204,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   empty?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  getArma3Attendance?: Resolver<Maybe<Array<Maybe<ResolversTypes['Arma3Attendance']>>>, ParentType, ContextType, RequireFields<QueryGetArma3AttendanceArgs, 'filter'>>;
+  getArma3Attendance?: Resolver<ResolversTypes['Arma3Attendance'], ParentType, ContextType, RequireFields<QueryGetArma3AttendanceArgs, 'filter'>>;
 };
 
 export type Resolvers<ContextType = any> = {

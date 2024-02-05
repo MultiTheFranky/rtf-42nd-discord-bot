@@ -8,7 +8,6 @@ export type PortConfig = {
 
 export type MongoDBConfig = {
   MONGODB_URI: string;
-  MONGODB_DB: string;
 };
 
 export type LoggingConfig = {
@@ -27,7 +26,6 @@ const schema: JSONSchemaType<MongoDBConfig & LoggingConfig & CacheConfig> = {
   type: "object",
   properties: {
     MONGODB_URI: { type: "string" },
-    MONGODB_DB: { type: "string" },
     // this is work-around, dotenv returns only strings
     // however we can validate it using enumerations
     LOGGING_LEVEL: {
@@ -54,7 +52,7 @@ const schema: JSONSchemaType<MongoDBConfig & LoggingConfig & CacheConfig> = {
     NODE_CACHE_TTL_SECONDS: { type: "string", nullable: true },
     PORT: { type: "string", nullable: true },
   },
-  required: ["MONGODB_URI", "MONGODB_DB"],
+  required: ["MONGODB_URI"],
   additionalProperties: true,
 };
 
@@ -63,7 +61,6 @@ const loadConfig = (): unknown => {
 
   return {
     MONGODB_URI: env.MONGODB_URI,
-    MONGODB_DB: env.MONGODB_DB,
     LOGGING_LEVEL: env.LOGGING_LEVEL,
     LOGGING_STACKTRACE_ENABLED: env.LOGGING_STACKTRACE_ENABLED,
     LOGGING_VARIABLES_ENABLED: env.LOGGING_VARIABLES_ENABLED,

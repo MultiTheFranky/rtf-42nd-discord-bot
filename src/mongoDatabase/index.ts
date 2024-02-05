@@ -63,3 +63,25 @@ export const writeDocuments = async <T extends Document>(
   const database = await connectToDatabase(client, db);
   return database.collection(collection).insertMany(documents);
 };
+
+export const updateDocument = async (
+  client: MongoClient,
+  db: Database,
+  collection: CollectionName,
+  query: any,
+  update: any
+) => {
+  const database = await connectToDatabase(client, db);
+  return database.collection(collection).updateOne(query, update);
+};
+
+export const updateDocuments = async (
+  client: MongoClient,
+  db: Database,
+  collection: CollectionName,
+  query: any,
+  update: any
+) => {
+  const database = await connectToDatabase(client, db);
+  return database.collection(collection).updateMany(query, update);
+};

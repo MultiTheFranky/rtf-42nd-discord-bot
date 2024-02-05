@@ -25,7 +25,8 @@ module.exports = {
   },
   ignorePatterns: [
     "/dist/**/*", // Ignore built files.
-    "*__generated__/*", // Ignore generated files.
+    //Ignore all the files in __generated__ folder
+    "*/__generated__/*",
   ],
   plugins: ["@typescript-eslint", "unicorn", "import", "prettier"],
   rules: {
@@ -57,5 +58,5 @@ module.exports = {
       },
     ],
   },
-  ignorePatterns: ["dist/**"],
+  ignorePatterns: ["dist/**", "src/graphql/__generated__/**"],
 };
