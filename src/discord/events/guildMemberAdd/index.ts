@@ -1,7 +1,7 @@
 import { Events, GuildMember, TextChannel } from "discord.js";
 import { DiscordEvent } from "discord/types/discord";
 import { sendForm } from "discord/form";
-import { client } from "server";
+import { bot } from "discord";
 import { initWelcomeForm } from "discord/form/welcomeForm";
 
 const CHANNEL = "llegadas";
@@ -21,6 +21,6 @@ export const event: DiscordEvent = {
     if (!role) return;
     member.roles.add(role);
     const form = initWelcomeForm(member.user);
-    await sendForm(form, client);
+    await sendForm(form, bot);
   },
 };
