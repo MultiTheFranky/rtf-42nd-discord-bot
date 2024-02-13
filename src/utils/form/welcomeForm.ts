@@ -117,7 +117,7 @@ export const initWelcomeForm = (user: User) =>
         id: "12",
         type: "text",
         question:
-          "¿Podrás mantener una asistencia aceptable los domingos de partida? 19:00-22:00",
+          "¿Podrás mantener una asistencia aceptable los domingos de partida? 19:00-22:00 (HORA ESPAÑA)",
       },
       {
         id: "13",
