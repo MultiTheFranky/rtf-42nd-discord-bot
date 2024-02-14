@@ -63,6 +63,38 @@ export const command: DiscordCommand = {
   },
   options: [
     {
+      name: "name",
+      description: "Name of the event",
+      nameLocalizations: {
+        "en-US": "name",
+        de: "name",
+        "es-ES": "nombre",
+      },
+      descriptionLocalizations: {
+        "en-US": "Name of the event",
+        de: "Name des Ereignisses",
+        "es-ES": "Nombre del evento",
+      },
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+    {
+      name: "description",
+      description: "Description of the event",
+      nameLocalizations: {
+        "en-US": "description",
+        de: "beschreibung",
+        "es-ES": "descripción",
+      },
+      descriptionLocalizations: {
+        "en-US": "Description of the event",
+        de: "Beschreibung des Ereignisses",
+        "es-ES": "Descripción del evento",
+      },
+      type: ApplicationCommandOptionType.String,
+      required: true,
+    },
+    {
       name: "channel",
       description: "Channel of the event",
       nameLocalizations: {
@@ -78,21 +110,52 @@ export const command: DiscordCommand = {
       type: ApplicationCommandOptionType.Channel,
       required: true,
     },
+    {
+      name: "role",
+      description: "Role of the event",
+      nameLocalizations: {
+        "en-US": "role",
+        de: "rolle",
+        "es-ES": "rol",
+      },
+      descriptionLocalizations: {
+        "en-US": "Role of the event",
+        de: "Rolle des Ereignisses",
+        "es-ES": "Rol del evento",
+      },
+      type: ApplicationCommandOptionType.Role,
+      required: false,
+    },
+    {
+      name: "date",
+      description: "Date of the event",
+      nameLocalizations: {
+        "en-US": "date",
+        de: "datum",
+        "es-ES": "fecha",
+      },
+      descriptionLocalizations: {
+        "en-US": "Date of the event",
+        de: "Datum des Ereignisses",
+        "es-ES": "Fecha del evento",
+      },
+      type: ApplicationCommandOptionType.String,
+      required: false,
+    },
   ],
   execute: async (interaction) => {
-    /* // Get the "misiones" channel
-    const channel = interaction.guild?.channels.cache.find(
-      (c) => c.name === "misiones"
-    ) as TextChannel; */
+    const name = interaction.options.getString("name", true);
+    const description = interaction.options.getString("description", true);
     const channel = interaction.options.getChannel(
       "channel",
       true
     ) as TextChannel;
-    const name = "Siguiente misión";
-    // Get next sunday
-    const date = new Date(
-      new Date().getTime() + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000
-    ).toLocaleDateString("es-ES");
+    const role = interaction.options.getRole("role");
+    const date =
+      interaction.options.getString("date") ??
+      new Date(
+        new Date().getTime() + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000
+      ).toLocaleDateString("es-ES");
 
     const { guild } = interaction;
     if (!guild) {
@@ -103,21 +166,27 @@ export const command: DiscordCommand = {
       return;
     }
 
-    const listOfPlayers = TEAMS.map(async (team) => {
+    const listOfPlayers = TEAMS.map(async (team): Promise<any | undefined> => {
+      if (role && role.name !== team) {
+        return;
+      }
+
       const players = await getPlayers(guild, team);
       if (players.length === 0) {
+        // eslint-disable-next-line consistent-return
         return {
           name: team,
           value: `- No players in this team`,
           inline: true,
         };
       }
+      // eslint-disable-next-line consistent-return
       return {
         name: team,
         value: players.map((player) => `- ${player} => ❔`).join("\n"),
         inline: true,
       };
-    });
+    }).filter((promise) => promise !== undefined);
 
     const players = await Promise.all(listOfPlayers);
 
@@ -140,6 +209,10 @@ export const command: DiscordCommand = {
         "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png"
       )
       .setTimestamp();
+
+    if (description) {
+      eventEmbed.setDescription(description);
+    }
 
     // Reply to the interaction
     await interaction.reply({
@@ -250,6 +323,7 @@ export const command: DiscordCommand = {
     const eventEmbed = new EmbedBuilder()
       .setColor("#0099ff")
       .setTitle(message.embeds[0].title)
+      .setDescription(message.embeds[0].description)
       .addFields(
         {
           name: "Date",
