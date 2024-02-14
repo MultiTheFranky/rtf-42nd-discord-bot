@@ -5,6 +5,7 @@ import {
   EmbedBuilder,
   Guild,
   TextChannel,
+  ThreadAutoArchiveDuration,
   User,
 } from "discord.js";
 import { writeToDB } from "database";
@@ -233,6 +234,11 @@ export const command: DiscordCommand = {
       await message.react("❌");
       await message.react("❓");
       await message.react("⌚");
+      // Create thread for the event
+      await message.startThread({
+        name,
+        autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+      });
       await writeToDB(message.id, "event");
     }
   },

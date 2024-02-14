@@ -5,6 +5,7 @@ import {
   Guild,
   MessageReaction,
   TextChannel,
+  ThreadAutoArchiveDuration,
   User,
 } from "discord.js";
 
@@ -106,6 +107,12 @@ export const mission = async (guild: Guild) => {
     await message.react("❌");
     await message.react("❓");
     await message.react("⌚");
+    // Create thread for the mission
+    const thread = await message.startThread({
+      name: "Misión",
+      autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
+    });
+    await thread.send("Hilo de la misión");
     await writeToDB(message.id, "missionCronJob");
   }
 };
