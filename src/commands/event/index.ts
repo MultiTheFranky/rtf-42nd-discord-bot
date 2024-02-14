@@ -186,9 +186,11 @@ export const command: DiscordCommand = {
         value: players.map((player) => `- ${player} => ❔`).join("\n"),
         inline: true,
       };
-    }).filter((promise) => promise !== undefined);
+    });
 
-    const players = await Promise.all(listOfPlayers);
+    const players = (await Promise.all(listOfPlayers)).filter(
+      (player) => player
+    );
 
     // Create the event embed
     const eventEmbed = new EmbedBuilder()
