@@ -1,4 +1,5 @@
 import { client } from "server";
+import { ChannelType } from "discord.js";
 import { mission, onReaction } from "./mission";
 import { CronJob } from "./types";
 
@@ -14,5 +15,35 @@ export const CronJobs: CronJob[] = [
       onReaction(reaction, user);
     },
     cron: "0 0 12 * * 1",
+  },
+  {
+    name: "joinReminderMessage",
+    execute: async () => {
+      const guild = client.guilds.cache.get("1180586120556331107");
+      if (!guild) return;
+      const channel = guild.channels.cache.get("1180586121445511200");
+      if (!channel || channel.type !== ChannelType.GuildText) return;
+      const taskforceRole = guild.roles.cache.get("1180598124268507196");
+      if (!taskforceRole) return;
+      await channel.send(
+        `<@&${taskforceRole.id}>
+        
+        Si quieres colaborar con nosotros al crecimiento de la 42nd R.T.F la mejor manera de hacerlo es ayudándonos con el reclutamiento. 
+
+        ¿Qué buscamos?
+
+        Capacidad de compromiso
+        Seriedad
+        Ganas de simular
+        Ganas de mejorar
+        Ganas de pasarlo bien
+
+        Si conoces a alguien que encaje en esta descripción, no esté activo en otro lugar con nuestro mismo horario de juego, no lo dudes mas, invítalo a unirse a nosotros.
+
+        https://discord.gg/2vwEtBKs9R`
+      );
+    },
+    // Every Friday at 10:30 PM
+    cron: "0 30 22 * * 5",
   },
 ];
