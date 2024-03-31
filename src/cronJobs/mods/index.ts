@@ -9,6 +9,7 @@ export const mods = async (guild: Guild) => {
       (c) => c.name === "mods-update",
     ) as TextChannel;
     const modsDB = await getAllModsFromDB();
+    if (modsDB.length === 0) return;
     const modsUpdated = await getUpdatedMods(modsDB);
     modsUpdated.forEach(async (mod) => {
       const modUpdatedInfo = await getMod(mod.id);
