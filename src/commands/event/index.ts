@@ -149,13 +149,13 @@ export const command: DiscordCommand = {
     const description = interaction.options.getString("description", true);
     const channel = interaction.options.getChannel(
       "channel",
-      true
+      true,
     ) as TextChannel;
     const role = interaction.options.getRole("role");
     const date =
       interaction.options.getString("date") ??
       new Date(
-        new Date().getTime() + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000
+        new Date().getTime() + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000,
       ).toLocaleDateString("es-ES");
 
     const { guild } = interaction;
@@ -190,7 +190,7 @@ export const command: DiscordCommand = {
     });
 
     const players = (await Promise.all(listOfPlayers)).filter(
-      (player) => player
+      (player) => player,
     );
 
     // Create the event embed
@@ -199,7 +199,7 @@ export const command: DiscordCommand = {
       .setTitle(name)
       .addFields(
         { name: "Date", value: date, inline: true },
-        { name: "\u200b", value: "\u200b", inline: false }
+        { name: "\u200b", value: "\u200b", inline: false },
       )
       .addFields(players)
       .addFields({
@@ -209,7 +209,7 @@ export const command: DiscordCommand = {
         inline: false,
       })
       .setImage(
-        "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png"
+        "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png",
       )
       .setTimestamp();
 
@@ -297,7 +297,7 @@ export const command: DiscordCommand = {
       const playersId = await getPlayersId(guild, team);
       // Create a map with key playersId and value players
       const playersMap = new Map(
-        playersId.map((id, index) => [id, players[index]])
+        playersId.map((id, index) => [id, players[index]]),
       );
       const valueOfTeam: string[] = Array.from(playersMap.keys()).map((key) =>
         // eslint-disable-next-line no-nested-ternary
@@ -305,17 +305,17 @@ export const command: DiscordCommand = {
         usersThatReactedWithDisLike.has(key)
           ? `- ${playersMap.get(key)} => ❔`
           : // eslint-disable-next-line no-nested-ternary
-          usersThatReactedWithLike.has(key)
-          ? `- ${playersMap.get(key)} => ✅`
-          : // eslint-disable-next-line no-nested-ternary
-          usersThatReactedWithDisLike.has(key)
-          ? `- ${playersMap.get(key)} => ❌`
-          : // eslint-disable-next-line no-nested-ternary
-          usersThatReactedWithQuestion.has(key)
-          ? `- ${playersMap.get(key)} => ❓`
-          : usersThatReactedWithWatch.has(key)
-          ? `- ${playersMap.get(key)} => ⌚`
-          : `- ${playersMap.get(key)} => ❔`
+            usersThatReactedWithLike.has(key)
+            ? `- ${playersMap.get(key)} => ✅`
+            : // eslint-disable-next-line no-nested-ternary
+              usersThatReactedWithDisLike.has(key)
+              ? `- ${playersMap.get(key)} => ❌`
+              : // eslint-disable-next-line no-nested-ternary
+                usersThatReactedWithQuestion.has(key)
+                ? `- ${playersMap.get(key)} => ❓`
+                : usersThatReactedWithWatch.has(key)
+                  ? `- ${playersMap.get(key)} => ⌚`
+                  : `- ${playersMap.get(key)} => ❔`,
       );
 
       return {
@@ -338,7 +338,7 @@ export const command: DiscordCommand = {
           value: message.embeds[0].fields[0].value,
           inline: true,
         },
-        { name: "\u200b", value: "\u200b", inline: false }
+        { name: "\u200b", value: "\u200b", inline: false },
       )
       .addFields(players)
       .addFields({
@@ -348,7 +348,7 @@ export const command: DiscordCommand = {
         inline: false,
       })
       .setImage(
-        "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png"
+        "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png",
       )
       .setTimestamp();
 

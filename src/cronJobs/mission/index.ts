@@ -50,12 +50,12 @@ const getPlayersId = async (guild: Guild, team: string) => {
 export const mission = async (guild: Guild) => {
   // Get the "misiones" channel
   const channel = guild.channels.cache.find(
-    (c) => c.name === "misiones"
+    (c) => c.name === "misiones",
   ) as TextChannel;
   const name = "Siguiente misión";
   // Get next sunday
   const date = new Date(
-    new Date().getTime() + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000
+    new Date().getTime() + (7 - new Date().getDay()) * 24 * 60 * 60 * 1000,
   ).toLocaleDateString("es-ES");
 
   const listOfPlayers = TEAMS.map(async (team) => {
@@ -82,7 +82,7 @@ export const mission = async (guild: Guild) => {
     .setTitle(name)
     .addFields(
       { name: "Date", value: date, inline: true },
-      { name: "\u200b", value: "\u200b", inline: false }
+      { name: "\u200b", value: "\u200b", inline: false },
     )
     .addFields(players)
     .addFields({
@@ -92,7 +92,7 @@ export const mission = async (guild: Guild) => {
       inline: false,
     })
     .setImage(
-      "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png"
+      "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png",
     )
     .setTimestamp();
 
@@ -171,24 +171,24 @@ export const onReaction = async (reaction: MessageReaction, user: User) => {
     const playersId = await getPlayersId(guild, team);
     // Create a map with key playersId and value players
     const playersMap = new Map(
-      playersId.map((id, index) => [id, players[index]])
+      playersId.map((id, index) => [id, players[index]]),
     );
     const valueOfTeam: string[] = Array.from(playersMap.keys()).map((key) =>
       // eslint-disable-next-line no-nested-ternary
       usersThatReactedWithLike.has(key) && usersThatReactedWithDisLike.has(key)
         ? `- ${playersMap.get(key)} => ❔`
         : // eslint-disable-next-line no-nested-ternary
-        usersThatReactedWithLike.has(key)
-        ? `- ${playersMap.get(key)} => ✅`
-        : // eslint-disable-next-line no-nested-ternary
-        usersThatReactedWithDisLike.has(key)
-        ? `- ${playersMap.get(key)} => ❌`
-        : // eslint-disable-next-line no-nested-ternary
-        usersThatReactedWithQuestion.has(key)
-        ? `- ${playersMap.get(key)} => ❓`
-        : usersThatReactedWithWatch.has(key)
-        ? `- ${playersMap.get(key)} => ⌚`
-        : `- ${playersMap.get(key)} => ❔`
+          usersThatReactedWithLike.has(key)
+          ? `- ${playersMap.get(key)} => ✅`
+          : // eslint-disable-next-line no-nested-ternary
+            usersThatReactedWithDisLike.has(key)
+            ? `- ${playersMap.get(key)} => ❌`
+            : // eslint-disable-next-line no-nested-ternary
+              usersThatReactedWithQuestion.has(key)
+              ? `- ${playersMap.get(key)} => ❓`
+              : usersThatReactedWithWatch.has(key)
+                ? `- ${playersMap.get(key)} => ⌚`
+                : `- ${playersMap.get(key)} => ❔`,
     );
 
     return {
@@ -210,7 +210,7 @@ export const onReaction = async (reaction: MessageReaction, user: User) => {
         value: message.embeds[0].fields[0].value,
         inline: true,
       },
-      { name: "\u200b", value: "\u200b", inline: false }
+      { name: "\u200b", value: "\u200b", inline: false },
     )
     .addFields(players)
     .addFields({
@@ -220,7 +220,7 @@ export const onReaction = async (reaction: MessageReaction, user: User) => {
       inline: false,
     })
     .setImage(
-      "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png"
+      "https://github.com/MultiTheFranky/rtf-42nd-discord-bot/raw/main/1000x1-00000000.png",
     )
     .setTimestamp();
 

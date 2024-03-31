@@ -22,11 +22,11 @@ export const getCommands = async () => {
   }).filter((dirent) => dirent.isDirectory());
   const files = await subDirectories.map((subDirectory) => {
     const subDirectoryFile = readdirSync(
-      join(__dirname, subDirectory.name)
+      join(__dirname, subDirectory.name),
     ).filter(
       (file) =>
         file.includes(".js") ||
-        (file.includes(".ts") && !file.includes(".d.ts"))
+        (file.includes(".ts") && !file.includes(".d.ts")),
     )[0];
 
     return join(subDirectory.name, subDirectoryFile);
@@ -70,7 +70,7 @@ export const registerCommands = async (client: Client) => {
   logger.info(
     `Registered ${commands.length} commands. Commands: ${commands
       .map((command) => command.name)
-      .join(", ")}`
+      .join(", ")}`,
   );
 };
 
@@ -95,7 +95,7 @@ export const listenerOnInteractionCreate = async (client: Client) => {
     // Get the command
     const commands = await getCommands();
     const command = commands.find(
-      (commandFind) => commandFind.name === interaction.commandName
+      (commandFind) => commandFind.name === interaction.commandName,
     );
     if (!command) {
       return;
@@ -120,7 +120,7 @@ export const reactionListener = async (client: Client) => {
     const commands = (await getCommands()) as DiscordCommand[];
     const getMessageCommand = await readFromDB(reaction.message.id);
     const command = commands.find(
-      (commandFind) => commandFind.name === getMessageCommand
+      (commandFind) => commandFind.name === getMessageCommand,
     );
     if (!command) {
       return;
@@ -142,7 +142,7 @@ export const reactionListener = async (client: Client) => {
     const commands = (await getCommands()) as DiscordCommand[];
     const getMessageCommand = await readFromDB(reaction.message.id);
     const command = commands.find(
-      (commandFind) => commandFind.name === getMessageCommand
+      (commandFind) => commandFind.name === getMessageCommand,
     );
     if (!command) {
       return;

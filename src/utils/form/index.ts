@@ -17,7 +17,7 @@ export const createForm = (
   id: string,
   name: string,
   description: string,
-  questions: Question[]
+  questions: Question[],
 ): Form => {
   db.set(id, {
     id,
@@ -65,7 +65,7 @@ export const removeQuestion = (form: Form, questionId: string): Form => {
 export const updateQuestion = (
   form: Form,
   questionId: string,
-  question: Question
+  question: Question,
 ): Form => {
   db.set(form.id, {
     ...form,
@@ -89,7 +89,7 @@ export const getForm = (formId: string): Form => db.get(formId);
 export const sendFormQuestion = async (
   user: User,
   question: Question,
-  formId: string
+  formId: string,
 ): Promise<void> => {
   switch (question.type) {
     case "text": {
@@ -108,7 +108,7 @@ export const sendFormQuestion = async (
         .setDescription(
           question.options
             ? question.options.map((o) => `${o.emoji} ${o.text}`).join("\n\n")
-            : ""
+            : "",
         );
       const userAvatar = user.avatarURL();
       if (userAvatar) {
@@ -131,7 +131,7 @@ export const sendFormQuestion = async (
         .setDescription(
           question.options
             ? question.options.map((o) => `${o.emoji} ${o.text}`).join("\n\n")
-            : ""
+            : "",
         );
       const userAvatar = user.avatarURL();
       if (userAvatar) {
@@ -169,19 +169,19 @@ export const sendForm = async (form: Form, bot: Client): Promise<void> => {
 export const formResponse = async (
   client: Client,
   channel: string,
-  form: Form
+  form: Form,
 ): Promise<void> => {
   // Create base message if not exists
   const user = await client.users.fetch(form.id);
   const channelToSend = (await client.channels.cache.find(
-    (c) => c.type === ChannelType.GuildText && c.name === channel
+    (c) => c.type === ChannelType.GuildText && c.name === channel,
   )) as TextChannel;
   let joinMessage = (
     await channelToSend.messages.fetch({
       limit: 100,
     })
   ).find(
-    (m) => m.author.id === client.user?.id && m.content.includes(form.name)
+    (m) => m.author.id === client.user?.id && m.content.includes(form.name),
   );
 
   if (!joinMessage) {
@@ -226,13 +226,13 @@ export const formResponse = async (
 export const sendNextQuestion = async (
   client: Client,
   user: User,
-  formId: string
+  formId: string,
 ): Promise<void> => {
   const form = getForm(formId);
   if (!form) return;
   const { lastQuestion } = form;
   const lastQuestionIndex = form.questions.findIndex(
-    (q) => q.id === lastQuestion?.id
+    (q) => q.id === lastQuestion?.id,
   );
   const nextQuestion = form.questions[lastQuestionIndex + 1];
   if (nextQuestion) {
@@ -240,7 +240,7 @@ export const sendNextQuestion = async (
   } else {
     if (form.sent) return;
     user.send(
-      "Gracias por responder el formulario, tus respuestas han sido enviadas a los administradores de R.T.F."
+      "Gracias por responder el formulario, tus respuestas han sido enviadas a los administradores de R.T.F.",
     );
     form.sent = true;
     updateForm(form);
@@ -254,7 +254,7 @@ export const answerCallback = async (
   user: User,
   formId: string,
   questionId: string,
-  response: string
+  response: string,
 ): Promise<void> => {
   let form = getForm(formId);
   let question = form.questions.find((q) => q.id === questionId);
@@ -301,7 +301,7 @@ export const initAnswerCallback = (bot: Client): void => {
           message.author,
           form.id,
           lastQuestion.id,
-          message.content
+          message.content,
         );
       }
     } else {
@@ -314,8 +314,12 @@ export const initAnswerCallback = (bot: Client): void => {
     const forms = getAllForms();
     forms.forEach(async (form) => {
       if (form && !form.sent) {
-        const u = await bot.users.fetch(form.id);
-        await sendNextQuestion(bot, u, form.id);
+        try {
+          const u = await bot.users.fetch(form.id);
+          await sendNextQuestion(bot, u, form.id);
+        } catch (error) {
+          logger.error(error);
+        }
       }
     });
   });
@@ -329,7 +333,7 @@ export const initReactionCallback = (bot: Client): void => {
     if (form) {
       const { lastQuestion } = form;
       const response = lastQuestion?.options?.find(
-        (o) => o.emoji === reaction.emoji.name || reaction.emoji.name === "✅"
+        (o) => o.emoji === reaction.emoji.name || reaction.emoji.name === "✅",
       );
       if (!response) return;
       if (lastQuestion) {
@@ -340,7 +344,7 @@ export const initReactionCallback = (bot: Client): void => {
               user as User,
               form.id,
               lastQuestion.id,
-              response.emoji
+              response.emoji,
             );
             break;
           }
@@ -351,7 +355,7 @@ export const initReactionCallback = (bot: Client): void => {
                 user as User,
                 form.id,
                 lastQuestion.id,
-                response.text
+                response.text,
               );
               return;
             }

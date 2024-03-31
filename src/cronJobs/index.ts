@@ -25,12 +25,12 @@ export const initCronJobs = async () => {
 
 const onReaction = async (
   reaction: MessageReaction | PartialMessageReaction,
-  user: User | PartialUser
+  user: User | PartialUser,
 ) => {
   const cronJobs = CronJobs.filter((cronJob) => cronJob.onReaction);
   const getMessageCronjob = await readFromDB(reaction.message.id);
   const cronJob = cronJobs.find(
-    (cronJobFind) => cronJobFind.name === getMessageCronjob
+    (cronJobFind) => cronJobFind.name === getMessageCronjob,
   );
   if (!cronJob || !cronJob.onReaction) {
     return;

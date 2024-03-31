@@ -130,5 +130,5 @@ export const initWelcomeForm = (user: User) =>
         question:
           "¿Has leído, comprendido las normas/reglas y te comprometes a su cumplimiento?",
       },
-    ]
+    ],
   );

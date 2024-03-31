@@ -17,8 +17,8 @@ const logger = createLogger({
         format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
         format.printf(
           (info) =>
-            `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`
-        )
+            `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`,
+        ),
       ),
       datePattern: "YYYY-MM-DD",
       zippedArchive: true,
@@ -35,8 +35,8 @@ const logger = createLogger({
         format.timestamp({ format: "YYYY-MM-DD HH:mm:ss.SSS" }),
         format.printf(
           (info) =>
-            `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`
-        )
+            `${info.timestamp} ${info.level} [${info.label}]: ${info.message}`,
+        ),
       ),
       level: "info",
     }),

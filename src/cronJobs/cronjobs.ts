@@ -2,6 +2,7 @@ import { client } from "server";
 import { ChannelType } from "discord.js";
 import { mission, onReaction } from "./mission";
 import { CronJob } from "./types";
+import { mods } from "./mods";
 
 export const CronJobs: CronJob[] = [
   {
@@ -15,6 +16,16 @@ export const CronJobs: CronJob[] = [
       onReaction(reaction, user);
     },
     cron: "0 0 12 * * 1",
+  },
+  {
+    name: "modsCronJob",
+    execute: async () => {
+      const guild = client.guilds.cache.get("1180586120556331107");
+      if (!guild) return;
+      await mods(guild);
+    },
+    onReaction: async () => {},
+    cron: "0 */5 * * * *",
   },
   {
     name: "joinReminderMessage",
@@ -40,7 +51,7 @@ export const CronJobs: CronJob[] = [
 
         Si conoces a alguien que encaje en esta descripción, no esté activo en otro lugar con nuestro mismo horario de juego, no lo dudes mas, invítalo a unirse a nosotros.
 
-        https://discord.gg/2vwEtBKs9R`
+        https://discord.gg/2vwEtBKs9R`,
       );
     },
     // Every Friday at 10:30 PM

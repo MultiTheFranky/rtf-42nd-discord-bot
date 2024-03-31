@@ -14,11 +14,11 @@ export const getEvents = async (): Promise<DiscordEvent[]> => {
   }).filter((dirent) => dirent.isDirectory());
   const files = await subDirectories.map((subDirectory) => {
     const subDirectoryFile = readdirSync(
-      join(__dirname, subDirectory.name)
+      join(__dirname, subDirectory.name),
     ).filter(
       (file) =>
         file.includes(".js") ||
-        (file.includes(".ts") && !file.includes(".d.ts"))
+        (file.includes(".ts") && !file.includes(".d.ts")),
     )[0];
 
     return join(subDirectory.name, subDirectoryFile);
