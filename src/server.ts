@@ -8,11 +8,11 @@ import logger from "utils/logger";
 export let client: Client;
 
 // Unhandled rejections
-/* process.on("unhandledRejection", (error) => {
+process.on("unhandledRejection", (error) => {
   if (error instanceof Error) {
     logger.error(`Unhandled rejection: ${error.message}`);
   }
-}); */
+});
 
 (async () => {
   const app = express();
