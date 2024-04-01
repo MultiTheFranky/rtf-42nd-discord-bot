@@ -112,7 +112,7 @@ export const getUpdatedMods = async (mods: Mod[]): Promise<Mod[]> => {
     "Content-Type",
     "application/x-www-form-urlencoded;charset=UTF-8",
   );
-  params.append("itemcount", "1");
+  params.append("itemcount", `${mods.length}`);
   mods.forEach((mod, index) => {
     params.append(`publishedfileids[${index}]`, mod.id);
   });
@@ -130,8 +130,10 @@ export const getUpdatedMods = async (mods: Mod[]): Promise<Mod[]> => {
         mod &&
         mod.updatedAt !==
           new Date(modsJsonValue.time_updated * 1000).toISOString()
-      )
+      ) {
+        logger.info(`Mod ${mod.name} updated`);
         return getModFromJson(modsJsonValue);
+      }
       return null;
     }),
   );

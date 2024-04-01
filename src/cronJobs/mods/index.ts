@@ -1,6 +1,11 @@
 import { Guild, TextChannel } from "discord.js";
 import logger from "utils/logger";
-import { getAllModsFromDB, getMod, getUpdatedMods } from "utils/steam";
+import {
+  getAllModsFromDB,
+  getMod,
+  getUpdatedMods,
+  writeModToDB,
+} from "utils/steam";
 
 export const mods = async (guild: Guild) => {
   // Get the "mods-update" channel
@@ -21,6 +26,7 @@ export const mods = async (guild: Guild) => {
             ).toLocaleString("es-ES", {
               timeZone: "Europe/Madrid",
             })}**\n- Últimos cambios:\n${modUpdatedInfo.lastChangeLog}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**\n`);
+      await writeModToDB(modUpdatedInfo);
     });
   } catch (error) {
     logger.error(error);
