@@ -25,7 +25,7 @@ export const mods = async (guild: Guild) => {
               modUpdatedInfo.updatedAt,
             ).toLocaleString("es-ES", {
               timeZone: "Europe/Madrid",
-            })}**\n- Últimos cambios:\n${modUpdatedInfo.lastChangeLog}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**\n`);
+            })}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**`);
       await writeModToDB(modUpdatedInfo);
     });
   } catch (error) {
