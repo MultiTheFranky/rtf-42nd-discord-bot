@@ -7,6 +7,13 @@ import {
   writeModToDB,
 } from "utils/steam";
 
+export const truncateString = (str: string, maxLength: number) => {
+  if (str.length > maxLength) {
+    return `${str.substring(0, maxLength)}...`;
+  }
+  return str;
+};
+
 export const mods = async (guild: Guild) => {
   // Get the "mods-update" channel
   try {
@@ -25,7 +32,7 @@ export const mods = async (guild: Guild) => {
               modUpdatedInfo.updatedAt,
             ).toLocaleString("es-ES", {
               timeZone: "Europe/Madrid",
-            })}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**`);
+            })}**\n${truncateString(modUpdatedInfo.lastChangeLog, 3000)}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**`);
       await writeModToDB(modUpdatedInfo);
     });
   } catch (error) {
