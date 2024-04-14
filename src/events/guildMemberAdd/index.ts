@@ -12,8 +12,8 @@ export const event: DiscordEvent = {
     ) as TextChannel;
     if (!channel) return;
     channel.send(
-      `Bienvenido al servidor, ${member}. Por favor, lee las reglas y rellena este formulario: https://form.multithefranky.com/form/VjMXvL\n
-      Welcome to the server, ${member}. Please read the rules and fill this form: https://form.multithefranky.com/form/VjMXvL`,
+      `Bienvenido al servidor, ${member}. Por favor, lee las reglas y rellena este formulario: https://forms.gle/NynMdSN6X8NpTNzi8\n
+      Welcome to the server, ${member}. Please read the rules and fill this form: https://forms.gle/NynMdSN6X8NpTNzi8`,
     );
     const role = member.guild.roles.cache.find(
       (roleTemp) => roleTemp.name === INITIAL_ROLE,
