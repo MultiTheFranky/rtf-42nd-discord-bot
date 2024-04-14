@@ -28,11 +28,11 @@ export const mods = async (guild: Guild) => {
       const taskforceRole = guild.roles.cache.get("1180598124268507196");
       if (!taskforceRole) return;
       channel.send(`
-            <@&${taskforceRole.id}>\nEl mod **${modUpdatedInfo.name}** ha sido actualizado:\n- Fecha de actualización: **${new Date(
+            <@&${taskforceRole.id}>\nEl mod **[${modUpdatedInfo.name}](https://steamcommunity.com/sharedfiles/filedetails/?id=${modUpdatedInfo.id})** ha sido actualizado:\n- Fecha de actualización: **${new Date(
               modUpdatedInfo.updatedAt,
             ).toLocaleString("es-ES", {
               timeZone: "Europe/Madrid",
-            })}**\n${truncateString(modUpdatedInfo.lastChangeLog, 3000)}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**`);
+            })}**\n${truncateString(modUpdatedInfo.lastChangeLog, 1000)}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**`);
       await writeModToDB(modUpdatedInfo);
     });
   } catch (error) {
