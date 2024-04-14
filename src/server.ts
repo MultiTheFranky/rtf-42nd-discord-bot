@@ -1,9 +1,8 @@
 import express from "express";
-import { Client, TextChannel } from "discord.js";
+import { Client } from "discord.js";
 import { startDiscordBot } from "discord-bot";
 import { initDB } from "database";
 import logger from "utils/logger";
-import { inspect } from "util";
 
 // eslint-disable-next-line import/no-mutable-exports
 export let client: Client;
