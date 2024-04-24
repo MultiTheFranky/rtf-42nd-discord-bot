@@ -37,6 +37,7 @@ export const mods = async (guild: Guild) => {
             })}**\n${truncateString(modUpdatedInfo.lastChangeLog, 1000)}\n**Por favor, actualiza el mod dando a reparar en el launcher de Arma 3.**`);
       await writeModToDB(modUpdatedInfo);
     });
+    if (modsUpdated.length === 0) return;
     logger.info("Mods updated. Trying to restart server.");
     // Trying to update the server
     const server = (await getServers()).find(
