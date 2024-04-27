@@ -44,7 +44,7 @@ export const mods = async (guild: Guild) => {
       (serverData) => serverData.name === process.env.SERVER_NAME,
     );
     if (!server) return;
-    // If server has users not restart it
+    // If server has users don't restart it
     // If it's between 19:00 and 22:00 of sunday don't restart it
     // If server is offline don't restart it
     const playersOnline = await getPlayersOnline(
@@ -54,7 +54,7 @@ export const mods = async (guild: Guild) => {
     if (
       playersOnline > 3 || // 3 Headless clients
       (date.getDay() === 0 && date.getHours() >= 19 && date.getHours() < 22) ||
-      (await isServerOnline(process.env.SERVER_HOSTNAME || ""))
+      !(await isServerOnline(process.env.SERVER_HOSTNAME || ""))
     ) {
       return;
     }
