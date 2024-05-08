@@ -1,13 +1,18 @@
 import axios from "axios";
 import { Mod, ModJson } from "types/mods";
 import jsdom from "jsdom";
-import { getAllFromDB, readFromDB, writeToDB } from "modsDatabase";
+import {
+  deleteAllFromDB,
+  getAllFromDB,
+  readFromDB,
+  writeToDB,
+} from "modsDatabase";
 import logger from "utils/logger";
 
 export const getModChangeNotes = async (modId: string): Promise<string> => {
   try {
     const response = await axios.get(
-      `https://steamcommunity.com/sharedfiles/filedetails/changelog/${modId}`,
+      `https://steamcommunity.com/sharedfiles/filedetails/changelog/${modId}`
     );
     if (!response.data) return "";
     const dom = new jsdom.JSDOM(response.data);
@@ -40,13 +45,13 @@ export const getMod = async (modId: string): Promise<Mod> => {
   const params = new FormData();
   params.append(
     "Content-Type",
-    "application/x-www-form-urlencoded;charset=UTF-8",
+    "application/x-www-form-urlencoded;charset=UTF-8"
   );
   params.append("itemcount", "1");
   params.append("publishedfileids[0]", modId);
   const response = await axios.post(
     "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/",
-    params,
+    params
   );
   const mod = response.data.response.publishedfiledetails[0] as ModJson;
   return getModFromJson(mod);
@@ -56,7 +61,7 @@ export const getMods = async (modIds: string[]): Promise<Mod[]> => {
   const params = new FormData();
   params.append(
     "Content-Type",
-    "application/x-www-form-urlencoded;charset=UTF-8",
+    "application/x-www-form-urlencoded;charset=UTF-8"
   );
   params.append("itemcount", `${modIds.length}`);
   modIds.forEach((modId, index) => {
@@ -65,7 +70,7 @@ export const getMods = async (modIds: string[]): Promise<Mod[]> => {
   try {
     const response = await axios.post(
       "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/",
-      params,
+      params
     );
     const mods = response.data.response.publishedfiledetails as ModJson[];
     return await Promise.all(mods.map(getModFromJson));
@@ -94,13 +99,13 @@ export const isModUpdated = async (mod: Mod): Promise<boolean> => {
   const params = new FormData();
   params.append(
     "Content-Type",
-    "application/x-www-form-urlencoded;charset=UTF-8",
+    "application/x-www-form-urlencoded;charset=UTF-8"
   );
   params.append("itemcount", "1");
   params.append("publishedfileids[0]", mod.id);
   const response = await axios.post(
     "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/",
-    params,
+    params
   );
   const modJson = response.data.response.publishedfiledetails[0] as ModJson;
   return mod.updatedAt !== new Date(modJson.time_updated * 1000).toISOString();
@@ -110,7 +115,7 @@ export const getUpdatedMods = async (mods: Mod[]): Promise<Mod[]> => {
   const params = new FormData();
   params.append(
     "Content-Type",
-    "application/x-www-form-urlencoded;charset=UTF-8",
+    "application/x-www-form-urlencoded;charset=UTF-8"
   );
   params.append("itemcount", `${mods.length}`);
   mods.forEach((mod, index) => {
@@ -118,13 +123,13 @@ export const getUpdatedMods = async (mods: Mod[]): Promise<Mod[]> => {
   });
   const response = await axios.post(
     "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/",
-    params,
+    params
   );
   const modsJson = response.data.response.publishedfiledetails as ModJson[];
   const modsUpdated = await Promise.all(
     modsJson.map((modsJsonValue) => {
       const mod = mods.find(
-        (modU) => modU.id === modsJsonValue.publishedfileid,
+        (modU) => modU.id === modsJsonValue.publishedfileid
       );
       if (
         mod &&
@@ -135,7 +140,7 @@ export const getUpdatedMods = async (mods: Mod[]): Promise<Mod[]> => {
         return getModFromJson(modsJsonValue);
       }
       return null;
-    }),
+    })
   );
   return modsUpdated.filter((mod) => mod !== null) as Mod[];
 };
@@ -150,4 +155,8 @@ export const readModFromDB = async (modId: string): Promise<Mod> =>
 export const getAllModsFromDB = async (): Promise<Mod[]> => {
   const records = await getAllFromDB();
   return Object.values(records);
+};
+
+export const removeAllModsFromDB = async (): Promise<void> => {
+  await deleteAllFromDB();
 };

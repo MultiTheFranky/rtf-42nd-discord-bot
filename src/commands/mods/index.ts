@@ -1,6 +1,11 @@
 import { ApplicationCommandOptionType } from "discord.js";
 import { DiscordCommand } from "types/discord";
-import { getImportMods, getMods, writeModToDB } from "utils/steam";
+import {
+  getImportMods,
+  getMods,
+  removeAllModsFromDB,
+  writeModToDB,
+} from "utils/steam";
 
 export const command: DiscordCommand = {
   name: "mods",
@@ -31,6 +36,7 @@ export const command: DiscordCommand = {
     try {
       const modIds = await getImportMods(await data.text());
       const mods = await getMods(modIds);
+      await removeAllModsFromDB();
       await Promise.all(mods.map(writeModToDB));
       const message = `Imported ${mods.length} mods`;
       await interaction.editReply(message);

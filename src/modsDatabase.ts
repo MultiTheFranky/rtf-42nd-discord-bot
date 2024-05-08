@@ -38,3 +38,10 @@ export const getAllFromDB = async () => {
   }
   return db.JSON();
 };
+
+export const deleteAllFromDB = async () => {
+  if (!db) {
+    await initDB();
+  }
+  return db.deleteAll();
+};
