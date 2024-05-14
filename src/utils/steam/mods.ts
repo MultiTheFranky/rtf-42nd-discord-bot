@@ -8,6 +8,7 @@ import {
   writeToDB,
 } from "modsDatabase";
 import logger from "utils/logger";
+import TurndownService from "turndown";
 
 export const getModChangeNotes = async (modId: string): Promise<string> => {
   try {
@@ -17,14 +18,10 @@ export const getModChangeNotes = async (modId: string): Promise<string> => {
     if (!response.data) return "";
     const dom = new jsdom.JSDOM(response.data);
     const element = dom.window.document.querySelector(".detailBox");
-    if (!element) return "";
-    const changeNote = element.textContent
-      ?.replace(/\t/g, "")
-      .replace(/\s\s\s\s/g, "\n")
-      .replace(/\n\n/g, "\n")
-      .replace(/\n\n\n/g, "\n")
-      .replace(/\n\n/g, "\n")
-      .replace("Discuss this update in the discussions section.\n", "");
+    if (!element || !element.textContent) return "";
+    const turndownService = new TurndownService();
+    // Remove last line
+    const changeNote = turndownService.turndown(element.innerHTML);
     if (!changeNote) return "";
     return changeNote;
   } catch (error) {

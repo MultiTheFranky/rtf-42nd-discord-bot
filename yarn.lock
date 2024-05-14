@@ -832,6 +832,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/turndown@npm:5.0.4":
+  version: 5.0.4
+  resolution: "@types/turndown@npm:5.0.4"
+  checksum: 500ba3a40952a5e41d99e407d83df70066408eb78d92e5f1f5f27bf70939aad11dcb64ae36872289b9c11948aa9bc4242d63d4898ad4bd91e9a41e1eb368c24f
+  languageName: node
+  linkType: hard
+
 "@types/ws@npm:8.5.9":
   version: 8.5.9
   resolution: "@types/ws@npm:8.5.9"
@@ -2201,6 +2208,13 @@ __metadata:
   dependencies:
     domelementtype: ^2.3.0
   checksum: 0f58f4a6af63e6f3a4320aa446d28b5790a009018707bce2859dcb1d21144c7876482b5188395a188dfa974238c019e0a1e610d2fc269a12b2c192ea2b0b131c
+  languageName: node
+  linkType: hard
+
+"domino@npm:^2.1.6":
+  version: 2.1.6
+  resolution: "domino@npm:2.1.6"
+  checksum: 9b1b6d2661efd8bf942b70d5e11ac0de6a63f17e49b7eb227d9a612fa7b7c12b7775520d64f498988a8ee334ea9c59a463c84ea510b0af17dd3e13fdce120410
   languageName: node
   linkType: hard
 
@@ -5569,6 +5583,7 @@ __metadata:
     "@types/gamedig": 5.0.1
     "@types/jsdom": 21.1.6
     "@types/node": ^18.15.3
+    "@types/turndown": 5.0.4
     "@typescript-eslint/eslint-plugin": ^5.56.0
     "@typescript-eslint/parser": ^5.56.0
     axios: 1.6.8
@@ -5595,6 +5610,7 @@ __metadata:
     ts-node-dev: ^2.0.0
     tsc-alias: 1.8.8
     tsconfig-paths: 4.2.0
+    turndown: 7.1.3
     typescript: ^5.3.2
     winston: ^3.8.2
     winston-daily-rotate-file: ^4.7.1
@@ -6425,6 +6441,15 @@ __metadata:
   peerDependencies:
     typescript: ">=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta"
   checksum: 1843f4c1b2e0f975e08c4c21caa4af4f7f65a12ac1b81b3b8489366826259323feb3fc7a243123453d2d1a02314205a7634e048d4a8009921da19f99755cdc48
+  languageName: node
+  linkType: hard
+
+"turndown@npm:7.1.3":
+  version: 7.1.3
+  resolution: "turndown@npm:7.1.3"
+  dependencies:
+    domino: ^2.1.6
+  checksum: 1117ee26428408f764019e7eadc058ad7f6f545536f77c7f7e4aad606768ae8a2235596a5ed98630f6281f47960bf00dd3c38170cd9356e6ef4219df912ec716
   languageName: node
   linkType: hard
 
