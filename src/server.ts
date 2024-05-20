@@ -1,11 +1,14 @@
 import express from "express";
 import { Client } from "discord.js";
-import { startDiscordBot } from "discord-bot";
+import { startDiscordBot, startDistubeBot } from "discord-bot";
 import { initDB } from "database";
 import logger from "utils/logger";
+import DisTube from "distube";
 
 // eslint-disable-next-line import/no-mutable-exports
 export let client: Client;
+// eslint-disable-next-line import/no-mutable-exports
+export let distube: DisTube;
 
 // Unhandled rejections
 process.on("unhandledRejection", (error) => {
@@ -26,6 +29,7 @@ process.on("unhandledRejection", (error) => {
 
   // Discord bot
   client = await startDiscordBot();
+  distube = await startDistubeBot(client);
 
   app.listen(process.env.PORT, () => {
     logger.info(`Listening on port ${process.env.PORT}`);

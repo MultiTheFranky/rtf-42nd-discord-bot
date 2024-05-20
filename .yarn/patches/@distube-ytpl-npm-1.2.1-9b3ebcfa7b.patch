@@ -1,0 +1,11 @@
+diff --git a/typings/index.d.ts b/typings/index.d.ts
+index 0f5fa73494b7c96089224de57a2f44fb9ae3ddc7..44d971cd11176712b64cae68595395eae03658a9 100644
+--- a/typings/index.d.ts
++++ b/typings/index.d.ts
+@@ -60,6 +60,4 @@ declare module '@distube/ytpl' {
+    * @returns Promise that resolves to playlist data;
+    */
+   function ytpl(id: string, options?: ytpl.options): Promise<ytpl.result>;
+-
+-  export = ytpl;
+ }

@@ -24,7 +24,7 @@ export const command: DiscordCommand = {
     },
   ],
   execute: async (interaction) => {
-    interaction.deferReply();
+    await interaction.deferReply();
     const file = interaction.options.get("file");
     if (!file) return;
     const htmlImportURL = (await file.attachment?.url) as string;
