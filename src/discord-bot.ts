@@ -82,7 +82,9 @@ export const startDistubeBot = async (client: Client) => {
     leaveOnFinish: true,
     leaveOnStop: true,
     plugins: [new SpotifyPlugin(), new SoundCloudPlugin(), new YtDlpPlugin()],
-    ffmpegPath: ffmpegPathC,
+    ffmpeg: {
+      path: ffmpegPathC,
+    },
   });
 
   const status = (queue: Queue) =>
