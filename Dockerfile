@@ -11,6 +11,11 @@ COPY . /app
 COPY package.json /app 
 COPY yarn.lock /app
 
+# Update and install ffmpeg
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y ffmpeg
+
 # Install dependencies
 RUN yarn \
     && \

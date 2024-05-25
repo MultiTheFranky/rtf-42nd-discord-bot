@@ -11,7 +11,6 @@ import DisTube, { Queue } from "distube";
 import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 import { YtDlpPlugin } from "@distube/yt-dlp";
-import ffmpegPath from "ffmpeg-static";
 
 export const startDiscordBot = async () => {
   const client = new Client({
@@ -70,11 +69,6 @@ export const startDiscordBot = async () => {
 };
 
 export const startDistubeBot = async (client: Client) => {
-  const ffmpegPathC = ffmpegPath;
-  if (!ffmpegPathC) {
-    logger.error("No ffmpeg path provided!");
-    process.exit(1);
-  }
   const distube = new DisTube(client, {
     searchSongs: 10,
     emitNewSongOnly: true,
@@ -82,9 +76,6 @@ export const startDistubeBot = async (client: Client) => {
     leaveOnFinish: true,
     leaveOnStop: true,
     plugins: [new SpotifyPlugin(), new SoundCloudPlugin(), new YtDlpPlugin()],
-    ffmpeg: {
-      path: ffmpegPathC,
-    },
   });
 
   const status = (queue: Queue) =>
