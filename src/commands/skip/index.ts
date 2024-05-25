@@ -1,18 +1,10 @@
-import { ApplicationCommandOptionType } from "discord.js";
 import { distube } from "server";
 import { DiscordCommand } from "types/discord";
 
 export const command: DiscordCommand = {
-  name: "play",
-  description: "Plays a song",
-  options: [
-    {
-      name: "song",
-      description: "The song to play. Can be a URL or a search query",
-      type: ApplicationCommandOptionType.String,
-      required: true,
-    },
-  ],
+  name: "skip",
+  description: "Skips a song",
+  options: [],
   execute: async (interaction) => {
     await interaction.deferReply();
     const queue = distube.getQueue(interaction);
