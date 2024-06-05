@@ -8,10 +8,11 @@ import {
   ThreadAutoArchiveDuration,
   User,
 } from "discord.js";
+import { MissionDBData } from "types/cronjobs";
 
-const TEAMS = ["HQ", "ALPHA", "BRAVO", "SUPPORT"];
+export const TEAMS = ["HQ", "ALPHA", "BRAVO", "SUPPORT"];
 
-const getPlayers = async (guild: Guild, team: string) => {
+export const getPlayers = async (guild: Guild, team: string) => {
   // The players are on a role with the name of the team
   const role = (await guild.roles.fetch())
     .filter((roleFetch) => roleFetch.name === team)
@@ -30,7 +31,7 @@ const getPlayers = async (guild: Guild, team: string) => {
   return players;
 };
 
-const getPlayersId = async (guild: Guild, team: string) => {
+export const getPlayersId = async (guild: Guild, team: string) => {
   // The players are on a role with the name of the team
   const role = (await guild.roles.fetch())
     .filter((roleFetch) => roleFetch.name === team)
@@ -88,7 +89,7 @@ export const mission = async (guild: Guild) => {
     .addFields({
       name: "Opciones",
       value:
-        "✅ => Voy a ir\n❌ => No voy a ir\n❓ => No lo sé\n⌚ => Participaré parcialmente",
+        "✅ => Voy a ir\n❌ => No voy a ir\n⌚ => Participaré parcialmente",
       inline: false,
     })
     .setImage(
@@ -105,7 +106,6 @@ export const mission = async (guild: Guild) => {
     await message.reactions.removeAll();
     await message.react("✅");
     await message.react("❌");
-    await message.react("❓");
     await message.react("⌚");
     // Create thread for the mission
     const thread = await message.startThread({
@@ -113,7 +113,11 @@ export const mission = async (guild: Guild) => {
       autoArchiveDuration: ThreadAutoArchiveDuration.OneWeek,
     });
     await thread.send("Hilo de la misión");
-    await writeToDB(message.id, "missionCronJob");
+    await writeToDB(message.id, {
+      name: "missionCronJob",
+      completed: false,
+    } as MissionDBData);
+    await writeToDB("lastMission", message.id);
   }
 };
 
@@ -142,15 +146,6 @@ export const onReaction = async (reaction: MessageReaction, user: User) => {
     const usersDisLikeReact = await disLikeReaction.users.fetch();
     usersThatReactedWithDisLike =
       usersThatReactedWithDisLike.concat(usersDisLikeReact);
-  }
-
-  // Get the list of users that reacted with '❓'
-  let usersThatReactedWithQuestion = new Collection<string, User>();
-  const questionReaction = reactions.get("❓");
-  if (questionReaction) {
-    const usersQuestionReact = await questionReaction.users.fetch();
-    usersThatReactedWithQuestion =
-      usersThatReactedWithQuestion.concat(usersQuestionReact);
   }
 
   // Get the list of users that reacted with '⌚'
@@ -183,12 +178,9 @@ export const onReaction = async (reaction: MessageReaction, user: User) => {
           : // eslint-disable-next-line no-nested-ternary
             usersThatReactedWithDisLike.has(key)
             ? `- ${playersMap.get(key)} => ❌`
-            : // eslint-disable-next-line no-nested-ternary
-              usersThatReactedWithQuestion.has(key)
-              ? `- ${playersMap.get(key)} => ❓`
-              : usersThatReactedWithWatch.has(key)
-                ? `- ${playersMap.get(key)} => ⌚`
-                : `- ${playersMap.get(key)} => ❔`,
+            : usersThatReactedWithWatch.has(key)
+              ? `- ${playersMap.get(key)} => ⌚`
+              : `- ${playersMap.get(key)} => ❔`,
     );
 
     return {
@@ -216,7 +208,7 @@ export const onReaction = async (reaction: MessageReaction, user: User) => {
     .addFields({
       name: "Opciones",
       value:
-        "✅ => Voy a ir\n❌ => No voy a ir\n❓ => No lo sé\n⌚ => Participaré parcialmente",
+        "✅ => Voy a ir\n❌ => No voy a ir\n⌚ => Participaré parcialmente",
       inline: false,
     })
     .setImage(

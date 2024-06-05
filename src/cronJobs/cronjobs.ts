@@ -3,6 +3,7 @@ import { ChannelType } from "discord.js";
 import { mission, onReaction } from "./mission";
 import { CronJob } from "./types";
 import { mods } from "./mods";
+import { lockLastMission } from "./lockLastMission";
 
 export const CronJobs: CronJob[] = [
   {
@@ -16,6 +17,16 @@ export const CronJobs: CronJob[] = [
       onReaction(reaction, user);
     },
     cron: "0 0 12 * * 1",
+  },
+  {
+    name: "lockLastMission",
+    execute: async () => {
+      const guild = client.guilds.cache.get("1180586120556331107");
+      if (!guild) return;
+      await lockLastMission(guild);
+    },
+    // Every Sunday at 18:15
+    cron: "0 15 18 * * 7",
   },
   {
     name: "modsCronJob",

@@ -9,6 +9,7 @@ import {
 import { CronJob as Cron } from "cron";
 import { readFromDB } from "database";
 import logger from "utils/logger";
+import { MissionDBData } from "types/cronjobs";
 import { CronJobs } from "./cronjobs";
 import type { CronJob as CronJobType } from "./types";
 
@@ -28,9 +29,17 @@ const onReaction = async (
   user: User | PartialUser,
 ) => {
   const cronJobs = CronJobs.filter((cronJob) => cronJob.onReaction);
-  const getMessageCronjob = await readFromDB(reaction.message.id);
+  const getMessageCronjob = (await readFromDB(
+    reaction.message.id,
+  )) as MissionDBData;
+  if (!getMessageCronjob) {
+    return;
+  }
+  if (getMessageCronjob.completed) {
+    return;
+  }
   const cronJob = cronJobs.find(
-    (cronJobFind) => cronJobFind.name === getMessageCronjob,
+    (cronJobFind) => cronJobFind.name === getMessageCronjob.name,
   );
   if (!cronJob || !cronJob.onReaction) {
     return;
