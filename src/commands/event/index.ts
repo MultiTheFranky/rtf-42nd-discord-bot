@@ -205,7 +205,7 @@ export const command: DiscordCommand = {
       .addFields({
         name: "Opciones",
         value:
-          "✅ => Voy a ir\n❌ => No voy a ir\n❓ => No lo sé\n⌚ => Participaré parcialmente",
+          "✅ => Voy a ir\n❌ => No voy a ir\n⌚ => Participaré parcialmente",
         inline: false,
       })
       .setImage(
@@ -232,7 +232,6 @@ export const command: DiscordCommand = {
       await message.reactions.removeAll();
       await message.react("✅");
       await message.react("❌");
-      await message.react("❓");
       await message.react("⌚");
       // Create thread for the event
       await message.startThread({
@@ -270,15 +269,6 @@ export const command: DiscordCommand = {
         usersThatReactedWithDisLike.concat(usersDisLikeReact);
     }
 
-    // Get the list of users that reacted with '❓'
-    let usersThatReactedWithQuestion = new Collection<string, User>();
-    const questionReaction = reactions.get("❓");
-    if (questionReaction) {
-      const usersQuestionReact = await questionReaction.users.fetch();
-      usersThatReactedWithQuestion =
-        usersThatReactedWithQuestion.concat(usersQuestionReact);
-    }
-
     // Get the list of users that reacted with '⌚'
     let usersThatReactedWithWatch = new Collection<string, User>();
     const watchReaction = reactions.get("⌚");
@@ -310,12 +300,9 @@ export const command: DiscordCommand = {
             : // eslint-disable-next-line no-nested-ternary
               usersThatReactedWithDisLike.has(key)
               ? `- ${playersMap.get(key)} => ❌`
-              : // eslint-disable-next-line no-nested-ternary
-                usersThatReactedWithQuestion.has(key)
-                ? `- ${playersMap.get(key)} => ❓`
-                : usersThatReactedWithWatch.has(key)
-                  ? `- ${playersMap.get(key)} => ⌚`
-                  : `- ${playersMap.get(key)} => ❔`,
+              : usersThatReactedWithWatch.has(key)
+                ? `- ${playersMap.get(key)} => ⌚`
+                : `- ${playersMap.get(key)} => ❔`,
       );
 
       return {
@@ -344,7 +331,7 @@ export const command: DiscordCommand = {
       .addFields({
         name: "Opciones",
         value:
-          "✅ => Voy a ir\n❌ => No voy a ir\n❓ => No lo sé\n⌚ => Participaré parcialmente",
+          "✅ => Voy a ir\n❌ => No voy a ir\n⌚ => Participaré parcialmente",
         inline: false,
       })
       .setImage(
