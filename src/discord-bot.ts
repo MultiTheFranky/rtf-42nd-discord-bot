@@ -120,11 +120,14 @@ export const startDistubeBot = async (client: Client) => {
       else logger.error(e);
     })
     .on(Events.DELETE_QUEUE, (queue) => {
-      if (queue.textChannel) queue.textChannel.send("❌ | Queue deleted");
+      if (queue.voiceChannel) queue.voice.leave();
     })
     .on(
       Events.FINISH,
-      (queue) => queue.textChannel && queue.textChannel.send("Finished!"),
+      async (queue) =>
+        queue.textChannel &&
+        (await queue.textChannel.send("Finished!")) &&
+        queue.voice.leave(),
     );
 
   return distube;
