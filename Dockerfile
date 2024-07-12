@@ -9,7 +9,7 @@ COPY . /app
 
 # Copy package.json and package.lock
 COPY package.json /app 
-COPY package.lock /app
+COPY package-lock.json /app
 
 # Update and install ffmpeg
 RUN apk update
