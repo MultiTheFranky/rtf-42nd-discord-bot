@@ -11,10 +11,11 @@ COPY . /app
 COPY package.json /app 
 COPY package-lock.json /app
 
-# Update and install ffmpeg
+# Update and install ffmpeg and python3
 RUN apk update
 RUN apk add
 RUN apk add ffmpeg
+RUN apk add python3
 
 # Install dependencies
 RUN npm install \
