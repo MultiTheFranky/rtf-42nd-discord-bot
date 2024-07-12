@@ -7,7 +7,7 @@ import {
   reactionListener,
 } from "commands/index";
 import { cronJobReactionListener, initCronJobs } from "cronJobs";
-import DisTube, { Queue } from "distube";
+import DisTube, { Queue, Events } from "distube";
 import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 import { YtDlpPlugin } from "@distube/yt-dlp";
@@ -70,11 +70,7 @@ export const startDiscordBot = async () => {
 
 export const startDistubeBot = async (client: Client) => {
   const distube = new DisTube(client, {
-    searchSongs: 10,
     emitNewSongOnly: true,
-    leaveOnEmpty: true,
-    leaveOnFinish: true,
-    leaveOnStop: true,
     plugins: [new SpotifyPlugin(), new SoundCloudPlugin(), new YtDlpPlugin()],
   });
 
@@ -89,7 +85,7 @@ export const startDistubeBot = async (client: Client) => {
     }\` | Autoplay: \`${queue.autoplay ? "On" : "Off"}\``;
   distube
     .on(
-      "playSong",
+      Events.PLAY_SONG,
       (queue, song) =>
         queue.textChannel &&
         queue.textChannel.send(
@@ -99,7 +95,7 @@ export const startDistubeBot = async (client: Client) => {
         ),
     )
     .on(
-      "addSong",
+      Events.ADD_SONG,
       (queue, song) =>
         queue.textChannel &&
         queue.textChannel.send(
@@ -107,7 +103,7 @@ export const startDistubeBot = async (client: Client) => {
         ),
     )
     .on(
-      "addList",
+      Events.ADD_LIST,
       (queue, playlist) =>
         queue.textChannel &&
         queue.textChannel.send(
@@ -116,26 +112,15 @@ export const startDistubeBot = async (client: Client) => {
           } songs) to queue\n${status(queue)}`,
         ),
     )
-    .on("error", (channel, e) => {
-      if (channel)
-        channel.send(
+    .on(Events.ERROR, (e, queue) => {
+      if (queue && queue.textChannel)
+        queue.textChannel.send(
           `❌ | An error encountered: ${e.toString().slice(0, 1974)}`,
         );
       else logger.error(e);
     })
     .on(
-      "empty",
-      (queue) =>
-        queue.textChannel &&
-        queue.textChannel.send(
-          "Voice channel is empty! Leaving the channel...",
-        ),
-    )
-    .on("searchNoResult", (message, query) =>
-      message.channel.send(`❌ | No result found for \`${query}\`!`),
-    )
-    .on(
-      "finish",
+      Events.FINISH,
       (queue) => queue.textChannel && queue.textChannel.send("Finished!"),
     );
 

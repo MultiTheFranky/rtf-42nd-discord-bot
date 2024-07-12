@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      - name: Run Yarn
-        run: yarn
-      - name: Run Yarn Build
-        run: yarn build
-      - name: Run Yarn Lint
-        run: yarn lint
+      - name: Run npm install
+        run: npm install
+      - name: Run npm run Build
+        run: npm run build
+      - name: Run npm run Lint
+        run: npm run lint
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"

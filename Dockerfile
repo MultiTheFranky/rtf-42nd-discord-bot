@@ -7,9 +7,9 @@ WORKDIR /app
 # Copy the source code
 COPY . /app
 
-# Copy package.json and yarn.lock
+# Copy package.json and package.lock
 COPY package.json /app 
-COPY yarn.lock /app
+COPY package.lock /app
 
 # Update and install ffmpeg
 RUN apk update
@@ -17,14 +17,12 @@ RUN apk add
 RUN apk add ffmpeg
 
 # Install dependencies
-RUN yarn \
+RUN npm install \
     && \
-    yarn build \
-    && \
-    yarn cache clean
+    npm run build
 
 # Expose the port
 EXPOSE 3000
 
 # Start the app
-CMD ["yarn", "server"]
+CMD ["npm", "run", "server"]
