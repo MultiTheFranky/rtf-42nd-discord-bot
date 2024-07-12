@@ -62,6 +62,6 @@ export const mods = async (guild: Guild) => {
     // Restart the server
     await restartServer(server.identifier);
   } catch (error) {
-    logger.error(error);
+    logger.error(`Error in mods cron job: ${error}`);
   }
 };

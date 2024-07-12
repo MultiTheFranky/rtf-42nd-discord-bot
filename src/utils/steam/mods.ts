@@ -130,6 +130,7 @@ export const getUpdatedMods = async (mods: Mod[]): Promise<Mod[]> => {
       );
       if (
         mod &&
+        modsJsonValue.time_updated &&
         mod.updatedAt !==
           new Date(modsJsonValue.time_updated * 1000).toISOString()
       ) {
