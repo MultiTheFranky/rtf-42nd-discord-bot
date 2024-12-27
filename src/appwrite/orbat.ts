@@ -69,41 +69,44 @@ export const createOrbat = async (client: Client) => {
   const guild = client.guilds.cache.get("1180586120556331107");
   if (!guild) return;
   const roles = guild.roles.cache;
-  for (const group of staticGroups) {
-    // Members of the group/role of Discord
-    const role = roles.find(
-      (r) => r.name.toLowerCase() === group.toLowerCase(),
-    );
-    if (!role) {
-      logger.error(`Role ${group} not found`);
-      continue;
-    }
-    const roleMembers = Array.from(role.members.values());
-    const membersInGroup = roleMembers.map((m) => ({
-      $id: m.nickname || m.user.username,
-      name: m.nickname || m.user.username,
-      role:
-        ROLES.find((staticRole) =>
-          m.roles.cache.has(
-            roles.find((r) => r.name.toLowerCase() === staticRole.toLowerCase())
-              ?.id || "",
-          ),
-        ) || "RIFLEMAN",
-    })) as AppwriteMember[];
-    logger.info(
-      `Members in ${group}: ${inspect(membersInGroup, true, null, true)}`,
-    );
-    try {
-      await writeGroup({
-        name: group,
-        members: membersInGroup,
-        subgroups: GROUPS.get(group) || [],
-      });
-    } catch (error) {
-      logger.error(`Error writing group ${group}: ${error}`);
-      return;
-    }
+  await Promise.all(
+    staticGroups.map(async (group) => {
+      // Members of the group/role of Discord
+      const role = roles.find(
+        (r) => r.name.toLowerCase() === group.toLowerCase(),
+      );
+      if (!role) {
+        logger.error(`Role ${group} not found`);
+        return;
+      }
+      const roleMembers = Array.from(role.members.values());
+      const membersInGroup = roleMembers.map((m) => ({
+        $id: m.nickname || m.user.username,
+        name: m.nickname || m.user.username,
+        role:
+          ROLES.find((staticRole) =>
+            m.roles.cache.has(
+              roles.find(
+                (r) => r.name.toLowerCase() === staticRole.toLowerCase(),
+              )?.id || "",
+            ),
+          ) || "RIFLEMAN",
+      })) as AppwriteMember[];
+      logger.info(
+        `Members in ${group}: ${inspect(membersInGroup, true, null, true)}`,
+      );
+      try {
+        await writeGroup({
+          name: group,
+          members: membersInGroup,
+          subgroups: GROUPS.get(group) || [],
+        });
+      } catch (error) {
+        logger.error(`Error writing group ${group}: ${error}`);
+        return;
+      }
 
-    logger.info(`Group ${group} updated`);
-  }
+      logger.info(`Group ${group} updated`);
+    }),
+  );
 };
