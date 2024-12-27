@@ -11,6 +11,7 @@ import DisTube, { Queue, Events } from "distube";
 import SpotifyPlugin from "@distube/spotify";
 import SoundCloudPlugin from "@distube/soundcloud";
 import { YtDlpPlugin } from "@distube/yt-dlp";
+import { createOrbat } from "appwrite/orbat";
 
 export const startDiscordBot = async () => {
   const client = new Client({
@@ -60,8 +61,9 @@ export const startDiscordBot = async () => {
   // Login to Discord
   await client.login();
 
-  client.on("ready", () => {
+  client.on("ready", async () => {
     logger.info(`Logged in as ${client.user?.tag}!`);
+    await createOrbat(client);
     initCronJobs();
   });
 
