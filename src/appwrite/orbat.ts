@@ -47,8 +47,10 @@ export const updateOrbatUnit = async (unit: Member) =>
 
 export const writeUnit = async (unit: Member) => {
   if ((await getOrbatUnits()).find((u) => u.name === unit.name)) {
+    logger.info("Updating unit");
     return updateOrbatUnit(unit);
   }
+  logger.info("Writing unit");
   return writeAppwriteCollectionData("orbat", "units", unit.name, unit);
 };
 
