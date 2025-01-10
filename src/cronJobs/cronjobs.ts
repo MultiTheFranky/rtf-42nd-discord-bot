@@ -1,6 +1,5 @@
 import { client } from "server";
 import { ChannelType } from "discord.js";
-import { createOrbat } from "appwrite/orbat";
 import { mission, onReaction } from "./mission";
 import { CronJob } from "./types";
 import { mods } from "./mods";
@@ -69,12 +68,12 @@ export const CronJobs: CronJob[] = [
     // Every Friday at 10:30 PM
     cron: "0 30 22 * * 5",
   },
-  {
+  /*   {
     name: "updateOrbat",
     execute: async () => {
       await createOrbat(client);
     },
     // Every Day at 03:00 AM
     cron: "0 0 3 * * *",
-  },
+  }, */
 ];
