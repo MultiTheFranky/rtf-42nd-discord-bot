@@ -68,6 +68,28 @@ export const CronJobs: CronJob[] = [
     // Every Friday at 10:30 PM
     cron: "0 30 22 * * 5",
   },
+  {
+    name: "reserveReminderMessage",
+    execute: async () => {
+      const guild = client.guilds.cache.get("1180586120556331107");
+      if (!guild) return;
+      const channel = guild.channels.cache.get("1186126630981218335");
+      if (!channel || channel.type !== ChannelType.GuildText) return;
+      const reserveRole = guild.roles.cache.get("1186126264386457630");
+      if (!reserveRole) return;
+      const rubiUser = guild.members.cache.find(
+        (member) => member.user.id === "171389505520140297",
+      );
+      if (!rubiUser) return;
+      await channel.send(
+        `<@&${reserveRole.id}>
+        
+        ¿Pensando en regresar al servicio activo? Ponte en contacto con <@&${rubiUser}> y se tramitará tu regreso.`,
+      );
+    },
+    // Every Friday at 10:30 PM
+    cron: "0 0 12 1 * *",
+  },
   /*   {
     name: "updateOrbat",
     execute: async () => {
